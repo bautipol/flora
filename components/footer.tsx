@@ -63,8 +63,16 @@ export function Footer() {
                 <span className="text-sm text-muted-foreground">info@flora.com</span>
               </div>
               <div className="flex space-x-4 mt-4">
-                <Instagram className="h-5 w-5 text-muted-foreground hover:text-primary cursor-pointer transition-colors" />
-                <Facebook className="h-5 w-5 text-muted-foreground hover:text-primary cursor-pointer transition-colors" />
+                <Link
+                  href="https://www.instagram.com/floragreengarden?igsh=bXpzaGhxOWRnNmNs"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Instagram className="h-5 w-5 text-muted-foreground hover:text-primary cursor-pointer transition-colors" />
+                </Link>
+                <Link href="#" target="_blank" rel="noopener noreferrer">
+                  <Facebook className="h-5 w-5 text-muted-foreground hover:text-primary cursor-pointer transition-colors" />
+                </Link>
               </div>
             </div>
           </div>

@@ -1,6 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { motion } from "framer-motion"
+import { useSearchParams } from "next/navigation"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
@@ -80,6 +82,7 @@ const products: Product[] = [
 
 const categories = [
   { value: "todos", label: "Todos los productos" },
+  { value: "plantas", label: "Plantas" },
   { value: "plantas-interior", label: "Plantas de Interior" },
   { value: "macetas", label: "Macetas" },
   { value: "tierras", label: "Tierras y Sustratos" },
@@ -87,15 +90,55 @@ const categories = [
 ]
 
 export default function TiendaPage() {
+  const searchParams = useSearchParams()
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("todos")
   const [sortBy, setSortBy] = useState("name")
   const { dispatch } = useCart()
 
+  useEffect(() => {
+    const searchParam = searchParams.get("search")
+    const categoryParam = searchParams.get("categoria")
+
+    if (searchParam) {
+      setSearchTerm(searchParam)
+    }
+
+    if (categoryParam) {
+      setSelectedCategory(categoryParam)
+    }
+  }, [searchParams])
+
   const filteredProducts = products
     .filter((product) => {
-      const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase())
-      const matchesCategory = selectedCategory === "todos" || product.category === selectedCategory
+      const searchLower = searchTerm.toLowerCase()
+
+      // Helper function to handle plurals
+      const normalizeSearchTerm = (term: string) => {
+        const singular = term.endsWith("s") ? term.slice(0, -1) : term
+        const plural = term.endsWith("s") ? term : term + "s"
+        return [term, singular, plural]
+      }
+
+      const searchVariations = normalizeSearchTerm(searchLower)
+
+      const matchesSearch =
+        searchTerm === "" ||
+        searchVariations.some(
+          (variation) =>
+            product.name.toLowerCase().includes(variation) || product.description.toLowerCase().includes(variation),
+        )
+
+      let matchesCategory = false
+      if (selectedCategory === "todos") {
+        matchesCategory = true
+      } else if (selectedCategory === "plantas") {
+        // Show only plants and chips in the "plantas" category
+        matchesCategory = product.category === "plantas-interior" || product.category === "chips"
+      } else {
+        matchesCategory = product.category === selectedCategory
+      }
+
       return matchesSearch && matchesCategory
     })
     .sort((a, b) => {
@@ -118,16 +161,31 @@ export default function TiendaPage() {
     <div className="min-h-screen">
       <Header />
 
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
+      <motion.div
+        className="container mx-auto px-4 py-8"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <motion.div
+          className="mb-8"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
           <h1 className="text-3xl md:text-4xl font-bold text-primary mb-4 font-sans">Nuestra Tienda</h1>
           <p className="text-lg text-muted-foreground">
             Descubre nuestra selección de plantas, macetas y accesorios para tu jardín
           </p>
-        </div>
+        </motion.div>
 
         {/* Filters */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <Input
@@ -161,39 +219,64 @@ export default function TiendaPage() {
               <SelectItem value="price-high">Precio: Mayor a Menor</SelectItem>
             </SelectContent>
           </Select>
-        </div>
+        </motion.div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredProducts.map((product) => (
-            <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-              <div className="h-48 bg-cover bg-center" style={{ backgroundImage: `url('${product.image}')` }} />
-              <CardContent className="p-4">
-                <div className="mb-2">
-                  <Badge variant="secondary" className="text-xs">
-                    {categories.find((cat) => cat.value === product.category)?.label}
-                  </Badge>
-                </div>
-                <h3 className="font-semibold mb-2 text-balance">{product.name}</h3>
-                <p className="text-sm text-muted-foreground mb-3 text-pretty">{product.description}</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold text-primary">${product.price.toLocaleString()}</span>
-                  <Button size="sm" onClick={() => addToCart(product)} className="flex items-center gap-2">
-                    <ShoppingCart className="h-4 w-4" />
-                    Agregar
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+        >
+          {filteredProducts.map((product, index) => (
+            <motion.div
+              key={product.id}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 * index }}
+              whileHover={{ y: -5, scale: 1.02 }}
+            >
+              <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+                <motion.div
+                  className="h-48 bg-cover bg-center"
+                  style={{ backgroundImage: `url('${product.image}')` }}
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.3 }}
+                />
+                <CardContent className="p-4">
+                  <div className="mb-2">
+                    <Badge variant="secondary" className="text-xs">
+                      {categories.find((cat) => cat.value === product.category)?.label}
+                    </Badge>
+                  </div>
+                  <h3 className="font-semibold mb-2 text-balance">{product.name}</h3>
+                  <p className="text-sm text-muted-foreground mb-3 text-pretty">{product.description}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-lg font-bold text-primary">${product.price.toLocaleString()}</span>
+                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                      <Button size="sm" onClick={() => addToCart(product)} className="flex items-center gap-2">
+                        <ShoppingCart className="h-4 w-4" />
+                        Agregar
+                      </Button>
+                    </motion.div>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {filteredProducts.length === 0 && (
-          <div className="text-center py-12">
+          <motion.div
+            className="text-center py-12"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
+          >
             <p className="text-lg text-muted-foreground">No se encontraron productos que coincidan con tu búsqueda.</p>
-          </div>
+          </motion.div>
         )}
-      </div>
+      </motion.div>
 
       <Footer />
     </div>
