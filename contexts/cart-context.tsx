@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { createContext, useContext, useReducer, type ReactNode } from "react"
 
 export interface Product {
@@ -20,6 +19,7 @@ export interface CartItem extends Product {
 interface CartState {
   items: CartItem[]
   total: number
+  notification: string | null
 }
 
 type CartAction =
@@ -27,10 +27,13 @@ type CartAction =
   | { type: "REMOVE_ITEM"; payload: string }
   | { type: "UPDATE_QUANTITY"; payload: { id: string; quantity: number } }
   | { type: "CLEAR_CART" }
+  | { type: "SHOW_NOTIFICATION"; payload: string }
+  | { type: "HIDE_NOTIFICATION" }
 
 const CartContext = createContext<{
   state: CartState
   dispatch: React.Dispatch<CartAction>
+  addToCart: (product: Product) => void
 } | null>(null)
 
 function cartReducer(state: CartState, action: CartAction): CartState {
@@ -43,6 +46,7 @@ function cartReducer(state: CartState, action: CartAction): CartState {
           item.id === action.payload.id ? { ...item, quantity: item.quantity + 1 } : item,
         )
         return {
+          ...state,
           items: updatedItems,
           total: updatedItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
         }
@@ -50,6 +54,7 @@ function cartReducer(state: CartState, action: CartAction): CartState {
 
       const newItems = [...state.items, { ...action.payload, quantity: 1 }]
       return {
+        ...state,
         items: newItems,
         total: newItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
       }
@@ -58,6 +63,7 @@ function cartReducer(state: CartState, action: CartAction): CartState {
     case "REMOVE_ITEM": {
       const newItems = state.items.filter((item) => item.id !== action.payload)
       return {
+        ...state,
         items: newItems,
         total: newItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
       }
@@ -71,13 +77,20 @@ function cartReducer(state: CartState, action: CartAction): CartState {
         .filter((item) => item.quantity > 0)
 
       return {
+        ...state,
         items: updatedItems,
         total: updatedItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
       }
     }
 
     case "CLEAR_CART":
-      return { items: [], total: 0 }
+      return { ...state, items: [], total: 0 }
+
+    case "SHOW_NOTIFICATION":
+      return { ...state, notification: action.payload }
+
+    case "HIDE_NOTIFICATION":
+      return { ...state, notification: null }
 
     default:
       return state
@@ -85,9 +98,18 @@ function cartReducer(state: CartState, action: CartAction): CartState {
 }
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(cartReducer, { items: [], total: 0 })
+  const [state, dispatch] = useReducer(cartReducer, { items: [], total: 0, notification: null })
 
-  return <CartContext.Provider value={{ state, dispatch }}>{children}</CartContext.Provider>
+  const addToCart = (product: Product) => {
+    dispatch({ type: "ADD_ITEM", payload: product })
+    dispatch({ type: "SHOW_NOTIFICATION", payload: `${product.name} agregado al carrito` })
+
+    setTimeout(() => {
+      dispatch({ type: "HIDE_NOTIFICATION" })
+    }, 3000)
+  }
+
+  return <CartContext.Provider value={{ state, dispatch, addToCart }}>{children}</CartContext.Provider>
 }
 
 export function useCart() {

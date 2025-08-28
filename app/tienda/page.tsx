@@ -94,7 +94,7 @@ export default function TiendaPage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("todos")
   const [sortBy, setSortBy] = useState("name")
-  const { dispatch } = useCart()
+  const { addToCart } = useCart()
 
   useEffect(() => {
     const searchParam = searchParams.get("search")
@@ -152,10 +152,6 @@ export default function TiendaPage() {
           return a.name.localeCompare(b.name)
       }
     })
-
-  const addToCart = (product: Product) => {
-    dispatch({ type: "ADD_ITEM", payload: product })
-  }
 
   return (
     <div className="min-h-screen">

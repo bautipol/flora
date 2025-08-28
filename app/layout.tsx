@@ -2,6 +2,7 @@ import type React from "react"
 import { Geist, Geist_Mono, Manrope } from "next/font/google"
 import "./globals.css"
 import { CartProvider } from "@/contexts/cart-context"
+import { CartNotification } from "@/components/cart-notification"
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -24,7 +25,7 @@ const manrope = Manrope({
 export const metadata = {
   title: "Flora - Tu jardín perfecto",
   description: "Plantas, macetas, tierras y todo para tu jardín. Diseño y paisajismo profesional.",
-    generator: 'v0.app'
+  generator: "v0.app",
 }
 
 export default function RootLayout({
@@ -35,7 +36,10 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${geistSans.variable} ${geistMono.variable} ${manrope.variable} antialiased`}>
       <body>
-        <CartProvider>{children}</CartProvider>
+        <CartProvider>
+          {children}
+          <CartNotification />
+        </CartProvider>
       </body>
     </html>
   )

@@ -229,6 +229,41 @@ export default function ContactoPage() {
                 </form>
               </CardContent>
             </Card>
+
+            <motion.div
+              className="mt-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.9 }}
+            >
+              <Card>
+                <CardContent className="p-6">
+                  <div className="text-center">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.8, delay: 1.0 }}
+                      whileHover={{ scale: 1.02 }}
+                    >
+                      <img
+                        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-HdnJvHycDdjN3Z22BaA6AljM7fNDTp.png"
+                        alt="Fundadoras de Flora"
+                        className="w-full max-w-md mx-auto rounded-lg shadow-lg mb-4"
+                      />
+                    </motion.div>
+                    <motion.p
+                      className="text-muted-foreground italic text-sm"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: 1.2 }}
+                    >
+                      Las fundadoras de Flora: dos amigas unidas por la pasión del diseño y la naturaleza, creando
+                      espacios verdes únicos desde 2020.
+                    </motion.p>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
           </motion.div>
 
           {/* Contact Information */}
@@ -241,7 +276,7 @@ export default function ContactoPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
             >
               <Card>
                 <CardHeader>
@@ -298,7 +333,7 @@ export default function ContactoPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.7 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
             >
               <Card>
                 <CardContent className="p-6">
@@ -324,7 +359,7 @@ export default function ContactoPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
+              transition={{ duration: 0.6, delay: 0.9 }}
             >
               <Card>
                 <CardContent className="p-6">
