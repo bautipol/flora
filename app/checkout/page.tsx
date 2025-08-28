@@ -69,7 +69,7 @@ export default function CheckoutPage() {
 
     // Generate WhatsApp message
     const whatsappMessage = generateWhatsAppMessage()
-    const whatsappNumber = "5491165269121" // Replace with actual WhatsApp number
+    const whatsappNumber = "5491135617412" // Replace with actual WhatsApp number
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`
 
     // Clear cart
@@ -148,7 +148,7 @@ export default function CheckoutPage() {
                       value={form.telefono}
                       onChange={(e) => handleInputChange("telefono", e.target.value)}
                       required
-                      placeholder="+54 9 11 1234-5678"
+                      placeholder="+54 9 11 3561-7412"
                     />
                   </div>
 

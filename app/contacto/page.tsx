@@ -60,7 +60,7 @@ export default function ContactoPage() {
 
     // Generate WhatsApp message
     const whatsappMessage = generateWhatsAppMessage()
-    const whatsappNumber = "5491112345678" // Replace with actual WhatsApp number
+    const whatsappNumber = "5491135617412" // Replace with actual WhatsApp number
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`
 
     // Open WhatsApp
@@ -79,7 +79,7 @@ export default function ContactoPage() {
   }
 
   const openWhatsApp = () => {
-    const whatsappNumber = "5491112345678"
+    const whatsappNumber = "5491135617412"
     const message = encodeURIComponent("¡Hola! Me interesa conocer más sobre los servicios de Flora 🌿")
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`
     window.open(whatsappUrl, "_blank")
@@ -139,7 +139,7 @@ export default function ContactoPage() {
                       type="tel"
                       value={form.telefono}
                       onChange={(e) => handleInputChange("telefono", e.target.value)}
-                      placeholder="+54 9 11 1234-5678"
+                      placeholder="+54 9 11 3561-7412"
                     />
                   </div>
 
@@ -192,7 +192,7 @@ export default function ContactoPage() {
                   <Phone className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
                   <div>
                     <h3 className="font-semibold mb-1">Teléfono</h3>
-                    <p className="text-muted-foreground">+54 9 11 1234-5678</p>
+                    <p className="text-muted-foreground">+54 9 11 3561-7412</p>
                     <p className="text-sm text-muted-foreground">Lunes a Viernes: 9:00 - 18:00</p>
                   </div>
                 </div>

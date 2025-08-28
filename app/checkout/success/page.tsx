@@ -72,7 +72,7 @@ export default function CheckoutSuccessPage() {
             <p className="text-sm text-muted-foreground">
               <strong>¿Tienes alguna pregunta?</strong>
               <br />
-              No dudes en contactarnos por WhatsApp al +54 9 11 1234-5678 o por email a info@flora.com
+              No dudes en contactarnos por WhatsApp al +54 9 11 3561-7412 o por email a info@flora.com
             </p>
           </div>
         </div>
