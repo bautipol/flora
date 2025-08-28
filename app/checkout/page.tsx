@@ -19,9 +19,6 @@ interface CheckoutForm {
   nombre: string
   email: string
   telefono: string
-  direccion: string
-  ciudad: string
-  codigoPostal: string
   notas: string
 }
 
@@ -33,9 +30,6 @@ export default function CheckoutPage() {
     nombre: "",
     email: "",
     telefono: "",
-    direccion: "",
-    ciudad: "",
-    codigoPostal: "",
     notas: "",
   })
 
@@ -49,10 +43,6 @@ export default function CheckoutPage() {
     message += `📧 *Email:* ${form.email}\n`
     message += `📱 *Teléfono:* ${form.telefono}\n\n`
 
-    message += `📍 *Dirección de Entrega:*\n`
-    message += `${form.direccion}\n`
-    message += `${form.ciudad}, CP: ${form.codigoPostal}\n\n`
-
     message += `🛒 *Productos:*\n`
     state.items.forEach((item) => {
       message += `• ${item.name} x${item.quantity} - $${(item.price * item.quantity).toLocaleString()}\n`
@@ -64,7 +54,8 @@ export default function CheckoutPage() {
       message += `📝 *Notas adicionales:*\n${form.notas}\n\n`
     }
 
-    message += `¡Gracias por elegir Flora! 🌱`
+    message += `¡Gracias por elegir Flora! 🌱\n`
+    message += `Nos pondremos en contacto para coordinar el pago y la entrega.`
 
     return encodeURIComponent(message)
   }
@@ -78,7 +69,7 @@ export default function CheckoutPage() {
 
     // Generate WhatsApp message
     const whatsappMessage = generateWhatsAppMessage()
-    const whatsappNumber = "5491112345678" // Replace with actual WhatsApp number
+    const whatsappNumber = "5491165269121" // Replace with actual WhatsApp number
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`
 
     // Clear cart
@@ -160,48 +151,6 @@ export default function CheckoutPage() {
                       placeholder="+54 9 11 1234-5678"
                     />
                   </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Dirección de Entrega</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <Label htmlFor="direccion">Dirección *</Label>
-                    <Input
-                      id="direccion"
-                      value={form.direccion}
-                      onChange={(e) => handleInputChange("direccion", e.target.value)}
-                      required
-                      placeholder="Calle, número, piso, departamento"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="ciudad">Ciudad *</Label>
-                      <Input
-                        id="ciudad"
-                        value={form.ciudad}
-                        onChange={(e) => handleInputChange("ciudad", e.target.value)}
-                        required
-                        placeholder="Ciudad"
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="codigoPostal">Código Postal *</Label>
-                      <Input
-                        id="codigoPostal"
-                        value={form.codigoPostal}
-                        onChange={(e) => handleInputChange("codigoPostal", e.target.value)}
-                        required
-                        placeholder="1234"
-                      />
-                    </div>
-                  </div>
 
                   <div>
                     <Label htmlFor="notas">Notas Adicionales</Label>
@@ -209,7 +158,7 @@ export default function CheckoutPage() {
                       id="notas"
                       value={form.notas}
                       onChange={(e) => handleInputChange("notas", e.target.value)}
-                      placeholder="Instrucciones especiales de entrega, referencias, etc."
+                      placeholder="Instrucciones especiales, referencias, etc."
                       rows={3}
                     />
                   </div>
@@ -251,11 +200,11 @@ export default function CheckoutPage() {
 
                   <div className="bg-muted p-4 rounded-lg">
                     <p className="text-sm text-muted-foreground mb-2">
-                      <strong>Método de pago:</strong>
+                      <strong>Método de pago y entrega:</strong>
                     </p>
                     <p className="text-sm">
-                      Al confirmar tu pedido, te contactaremos por WhatsApp para coordinar el pago y la entrega.
-                      Aceptamos efectivo, transferencia bancaria y tarjetas.
+                      Al confirmar tu pedido, te contactaremos por WhatsApp para coordinar el pago, la entrega y todos
+                      los detalles. Aceptamos efectivo, transferencia bancaria y tarjetas.
                     </p>
                   </div>
 
