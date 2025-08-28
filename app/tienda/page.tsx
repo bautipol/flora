@@ -78,6 +78,38 @@ const products: Product[] = [
     category: "tierras",
     description: "Mezcla especial para cactus y suculentas con excelente drenaje",
   },
+  {
+    id: "9",
+    name: "Compost Orgánico",
+    price: 1200,
+    image: "/organic-compost-soil-bag-for-plants.png",
+    category: "tierras",
+    description: "Compost 100% orgánico, perfecto para enriquecer el suelo",
+  },
+  {
+    id: "10",
+    name: "Tierra para Orquídeas",
+    price: 1100,
+    image: "/orchid-soil-mix-bag-specialized-substrate.png",
+    category: "tierras",
+    description: "Mezcla especializada para orquídeas con corteza y musgo",
+  },
+  {
+    id: "11",
+    name: "Sustrato para Semillas",
+    price: 750,
+    image: "/seed-starting-soil-mix-fine-substrate-bag.png",
+    category: "tierras",
+    description: "Sustrato fino ideal para germinación de semillas",
+  },
+  {
+    id: "12",
+    name: "Tierra Negra Premium",
+    price: 1350,
+    image: "/premium-black-soil-bag-rich-organic-matter.png",
+    category: "tierras",
+    description: "Tierra negra de primera calidad, rica en materia orgánica",
+  },
 ]
 
 const categories = [
@@ -100,12 +132,12 @@ export default function TiendaPage() {
     const searchParam = searchParams.get("search")
     const categoryParam = searchParams.get("categoria")
 
-    if (searchParam) {
-      setSearchTerm(searchParam)
-    }
-
-    if (categoryParam) {
+    if (categoryParam && categoryParam !== "todos") {
       setSelectedCategory(categoryParam)
+      setSearchTerm("") // Clear search when selecting category
+    } else if (searchParam) {
+      setSearchTerm(searchParam)
+      setSelectedCategory("todos") // Reset category when searching
     }
   }, [searchParams])
 
