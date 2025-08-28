@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Manrope } from "next/font/google"
 import "./globals.css"
 import { CartProvider } from "@/contexts/cart-context"
 import { CartNotification } from "@/components/cart-notification"
+import { ScrollToTop } from "@/components/scroll-to-top"
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -39,6 +40,7 @@ export default function RootLayout({
         <CartProvider>
           {children}
           <CartNotification />
+          <ScrollToTop />
         </CartProvider>
       </body>
     </html>
