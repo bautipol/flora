@@ -52,6 +52,10 @@ export default function ContactoPage() {
     return encodeURIComponent(message)
   }
 
+  const isMobile = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
@@ -61,11 +65,16 @@ export default function ContactoPage() {
 
     // Generate WhatsApp message
     const whatsappMessage = generateWhatsAppMessage()
-    const whatsappNumber = "5491135617412" // Replace with actual WhatsApp number
+    const whatsappNumber = "5491135617412"
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`
 
-    // Open WhatsApp
-    window.open(whatsappUrl, "_blank")
+    if (isMobile()) {
+      // On mobile, use window.location.href to ensure WhatsApp opens properly
+      window.location.href = whatsappUrl
+    } else {
+      // On desktop, use window.open
+      window.open(whatsappUrl, "_blank")
+    }
 
     // Reset form
     setForm({
@@ -83,7 +92,12 @@ export default function ContactoPage() {
     const whatsappNumber = "5491135617412"
     const message = encodeURIComponent("¡Hola! Me interesa conocer más sobre los servicios de Flora 🌿")
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`
-    window.open(whatsappUrl, "_blank")
+
+    if (isMobile()) {
+      window.location.href = whatsappUrl
+    } else {
+      window.open(whatsappUrl, "_blank")
+    }
   }
 
   return (

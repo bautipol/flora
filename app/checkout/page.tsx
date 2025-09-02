@@ -60,6 +60,10 @@ export default function CheckoutPage() {
     return encodeURIComponent(message)
   }
 
+  const isMobile = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
@@ -69,17 +73,25 @@ export default function CheckoutPage() {
 
     // Generate WhatsApp message
     const whatsappMessage = generateWhatsAppMessage()
-    const whatsappNumber = "5491135617412" // Replace with actual WhatsApp number
+    const whatsappNumber = "5491135617412"
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`
 
     // Clear cart
     dispatch({ type: "CLEAR_CART" })
 
-    // Open WhatsApp
-    window.open(whatsappUrl, "_blank")
+    if (isMobile()) {
+      // On mobile, use window.location.href to ensure WhatsApp opens properly
+      window.location.href = whatsappUrl
+    } else {
+      // On desktop, use window.open
+      window.open(whatsappUrl, "_blank")
+      // Only redirect to success page on desktop
+      setTimeout(() => {
+        router.push("/checkout/success")
+      }, 1000)
+    }
 
-    // Redirect to success page
-    router.push("/checkout/success")
+    setIsSubmitting(false)
   }
 
   if (state.items.length === 0) {
