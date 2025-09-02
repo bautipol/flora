@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { useCart } from "@/contexts/cart-context"
 import { useRouter } from "next/navigation"
-import { ShoppingBag } from "lucide-react"
+import { ShoppingBag, CheckCircle } from "lucide-react"
 import Link from "next/link"
 
 interface CheckoutForm {
@@ -26,6 +26,7 @@ export default function CheckoutPage() {
   const { state, dispatch } = useCart()
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showConfirmation, setShowConfirmation] = useState(false)
   const [form, setForm] = useState<CheckoutForm>({
     nombre: "",
     email: "",
@@ -80,8 +81,13 @@ export default function CheckoutPage() {
     dispatch({ type: "CLEAR_CART" })
 
     if (isMobile()) {
-      // On mobile, use window.location.href to ensure WhatsApp opens properly
-      window.location.href = whatsappUrl
+      setShowConfirmation(true)
+      setIsSubmitting(false)
+
+      // Open WhatsApp after showing confirmation
+      setTimeout(() => {
+        window.location.href = whatsappUrl
+      }, 2000)
     } else {
       // On desktop, use window.open
       window.open(whatsappUrl, "_blank")
@@ -89,9 +95,25 @@ export default function CheckoutPage() {
       setTimeout(() => {
         router.push("/checkout/success")
       }, 1000)
+      setIsSubmitting(false)
     }
+  }
 
-    setIsSubmitting(false)
+  if (showConfirmation) {
+    return (
+      <div className="min-h-screen">
+        <Header />
+        <div className="container mx-auto px-4 py-16">
+          <div className="text-center max-w-md mx-auto">
+            <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
+            <h1 className="text-2xl font-bold mb-4">¡Pedido Confirmado!</h1>
+            <p className="text-muted-foreground mb-6">Te redirigiremos a WhatsApp para finalizar tu pedido...</p>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    )
   }
 
   if (state.items.length === 0) {
