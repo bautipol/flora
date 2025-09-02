@@ -7,8 +7,9 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
-import { ShoppingCart, Menu, X, Leaf, Search } from "lucide-react"
+import { ShoppingCart, Menu, X, Search } from "lucide-react"
 import { useCart } from "@/contexts/cart-context"
+import Image from "next/image"
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -69,7 +70,7 @@ export function Header() {
     <header className="w-full bg-white">
       <div className="container mx-auto px-4">
         {/* Top section with search, logo, and icons */}
-        <div className="flex h-20 items-center justify-between">
+        <div className="flex h-24 items-center justify-between">
           {/* Search bar - left side */}
           <div className="flex-1 max-w-sm">
             <div ref={searchRef} className="relative">
@@ -116,9 +117,17 @@ export function Header() {
 
           {/* Logo - center */}
           <div className="flex-1 flex justify-center">
-            <Link href="/" className="flex items-center space-x-2">
-              <Leaf className="h-10 w-10 text-primary" />
-              <span className="text-4xl font-serif text-primary">Flora</span>
+            <Link href="/" className="flex items-center">
+              <Image
+                src="/flora-logo-clean.png"
+                alt="Flora Green Garden Paisajismo"
+                width={220}
+                height={110}
+                quality={100}
+                priority
+                className="h-20 w-auto object-contain"
+                style={{ imageRendering: "crisp-edges" }}
+              />
             </Link>
           </div>
 
