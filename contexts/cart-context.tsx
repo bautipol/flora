@@ -3,6 +3,11 @@
 import type React from "react"
 import { createContext, useContext, useReducer, type ReactNode } from "react"
 
+export interface ProductOption {
+  name: string
+  price: number
+}
+
 export interface Product {
   id: string
   name: string
@@ -10,10 +15,13 @@ export interface Product {
   image: string
   category: string
   description: string
+  options?: ProductOption[] // Added optional product options
 }
 
 export interface CartItem extends Product {
   quantity: number
+  selectedOption?: ProductOption // Added selected option for cart items
+  finalPrice: number // Added final price based on selected option
 }
 
 interface CartState {
@@ -23,7 +31,7 @@ interface CartState {
 }
 
 type CartAction =
-  | { type: "ADD_ITEM"; payload: Product }
+  | { type: "ADD_ITEM"; payload: { product: Product; selectedOption?: ProductOption } } // Updated to include selected option
   | { type: "REMOVE_ITEM"; payload: string }
   | { type: "UPDATE_QUANTITY"; payload: { id: string; quantity: number } }
   | { type: "CLEAR_CART" }
@@ -33,30 +41,45 @@ type CartAction =
 const CartContext = createContext<{
   state: CartState
   dispatch: React.Dispatch<CartAction>
-  addToCart: (product: Product) => void
+  addToCart: (product: Product, selectedOption?: ProductOption) => void // Updated to accept selected option
 } | null>(null)
 
 function cartReducer(state: CartState, action: CartAction): CartState {
   switch (action.type) {
     case "ADD_ITEM": {
-      const existingItem = state.items.find((item) => item.id === action.payload.id)
+      const { product, selectedOption } = action.payload
+      const finalPrice = selectedOption ? selectedOption.price : product.price // Calculate final price based on option
+      const itemId = selectedOption ? `${product.id}-${selectedOption.name}` : product.id // Create unique ID for option combinations
+
+      const existingItem = state.items.find(
+        (item) => item.id === product.id && item.selectedOption?.name === selectedOption?.name,
+      )
 
       if (existingItem) {
         const updatedItems = state.items.map((item) =>
-          item.id === action.payload.id ? { ...item, quantity: item.quantity + 1 } : item,
+          item.id === product.id && item.selectedOption?.name === selectedOption?.name
+            ? { ...item, quantity: item.quantity + 1 }
+            : item,
         )
         return {
           ...state,
           items: updatedItems,
-          total: updatedItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
+          total: updatedItems.reduce((sum, item) => sum + item.finalPrice * item.quantity, 0),
         }
       }
 
-      const newItems = [...state.items, { ...action.payload, quantity: 1 }]
+      const newCartItem: CartItem = {
+        ...product,
+        quantity: 1,
+        selectedOption,
+        finalPrice,
+      }
+
+      const newItems = [...state.items, newCartItem]
       return {
         ...state,
         items: newItems,
-        total: newItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
+        total: newItems.reduce((sum, item) => sum + item.finalPrice * item.quantity, 0),
       }
     }
 
@@ -65,7 +88,7 @@ function cartReducer(state: CartState, action: CartAction): CartState {
       return {
         ...state,
         items: newItems,
-        total: newItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
+        total: newItems.reduce((sum, item) => sum + item.finalPrice * item.quantity, 0),
       }
     }
 
@@ -79,7 +102,7 @@ function cartReducer(state: CartState, action: CartAction): CartState {
       return {
         ...state,
         items: updatedItems,
-        total: updatedItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
+        total: updatedItems.reduce((sum, item) => sum + item.finalPrice * item.quantity, 0),
       }
     }
 
@@ -100,9 +123,10 @@ function cartReducer(state: CartState, action: CartAction): CartState {
 export function CartProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(cartReducer, { items: [], total: 0, notification: null })
 
-  const addToCart = (product: Product) => {
-    dispatch({ type: "ADD_ITEM", payload: product })
-    dispatch({ type: "SHOW_NOTIFICATION", payload: `${product.name} agregado al carrito` })
+  const addToCart = (product: Product, selectedOption?: ProductOption) => {
+    dispatch({ type: "ADD_ITEM", payload: { product, selectedOption } })
+    const optionText = selectedOption ? ` (${selectedOption.name})` : ""
+    dispatch({ type: "SHOW_NOTIFICATION", payload: `${product.name}${optionText} agregado al carrito` })
 
     setTimeout(() => {
       dispatch({ type: "HIDE_NOTIFICATION" })

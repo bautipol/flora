@@ -17,10 +17,15 @@ const products: Product[] = [
   {
     id: "1",
     name: "Monstera Deliciosa",
-    price: 3500,
+    price: 3500, // base price
     image: "/monstera-deliciosa-pot.png",
     category: "plantas-interior",
     description: "Planta de interior perfecta para espacios con luz indirecta",
+    options: [
+      { name: "Pequeña (15cm)", price: 3500 },
+      { name: "Mediana (25cm)", price: 4800 },
+      { name: "Grande (35cm)", price: 6200 },
+    ],
   },
   {
     id: "2",
@@ -29,6 +34,11 @@ const products: Product[] = [
     image: "/ficus-lyrata-fiddle-leaf-fig-plant.png",
     category: "plantas-interior",
     description: "Elegante planta de hojas grandes, ideal para decoración",
+    options: [
+      { name: "Pequeña (20cm)", price: 4200 },
+      { name: "Mediana (30cm)", price: 5800 },
+      { name: "Grande (45cm)", price: 7500 },
+    ],
   },
   {
     id: "3",
@@ -37,6 +47,11 @@ const products: Product[] = [
     image: "/white-ceramic-plant-pot.png",
     category: "macetas",
     description: "Maceta de cerámica blanca con diseño minimalista",
+    options: [
+      { name: "Chica (12cm)", price: 1800 },
+      { name: "Mediana (18cm)", price: 2400 },
+      { name: "Grande (25cm)", price: 3200 },
+    ],
   },
   {
     id: "4",
@@ -45,14 +60,24 @@ const products: Product[] = [
     image: "/plant-soil-substrate-bag.png",
     category: "tierras",
     description: "Sustrato rico en nutrientes para todo tipo de plantas",
+    options: [
+      { name: "2kg", price: 950 },
+      { name: "5kg", price: 2100 },
+      { name: "10kg", price: 3800 },
+    ],
   },
   {
     id: "5",
     name: "Chips Decorativos",
     price: 650,
     image: "/decorative-wood-chips-for-plants.png",
-    category: "tierras", // moved chips from "chips" category to "tierras" category
+    category: "tierras",
     description: "Chips de madera natural para decoración y retención de humedad",
+    options: [
+      { name: "1kg", price: 650 },
+      { name: "3kg", price: 1650 },
+      { name: "5kg", price: 2500 },
+    ],
   },
   {
     id: "6",
@@ -61,6 +86,11 @@ const products: Product[] = [
     image: "/golden-pothos-hanging-plant.png",
     category: "plantas-interior",
     description: "Planta colgante de fácil cuidado, perfecta para principiantes",
+    options: [
+      { name: "Pequeña (15cm)", price: 2200 },
+      { name: "Mediana (25cm)", price: 3200 },
+      { name: "Grande (35cm)", price: 4500 },
+    ],
   },
   {
     id: "7",
@@ -69,6 +99,11 @@ const products: Product[] = [
     image: "/terracotta-clay-plant-pot.png",
     category: "macetas",
     description: "Maceta de terracota tradicional, ideal para plantas que necesitan drenaje",
+    options: [
+      { name: "Chica (10cm)", price: 1200 },
+      { name: "Mediana (16cm)", price: 1800 },
+      { name: "Grande (22cm)", price: 2600 },
+    ],
   },
   {
     id: "8",
@@ -77,6 +112,11 @@ const products: Product[] = [
     image: "/cactus-soil-mix-bag.png",
     category: "tierras",
     description: "Mezcla especial para cactus y suculentas con excelente drenaje",
+    options: [
+      { name: "1kg", price: 850 },
+      { name: "3kg", price: 2200 },
+      { name: "5kg", price: 3400 },
+    ],
   },
   {
     id: "9",
@@ -85,6 +125,11 @@ const products: Product[] = [
     image: "/organic-compost-soil-bag-for-plants.png",
     category: "tierras",
     description: "Compost 100% orgánico, perfecto para enriquecer el suelo",
+    options: [
+      { name: "2kg", price: 1200 },
+      { name: "5kg", price: 2800 },
+      { name: "10kg", price: 4800 },
+    ],
   },
   {
     id: "10",
@@ -93,6 +138,11 @@ const products: Product[] = [
     image: "/orchid-soil-mix-bag-specialized-substrate.png",
     category: "tierras",
     description: "Mezcla especializada para orquídeas con corteza y musgo",
+    options: [
+      { name: "1kg", price: 1100 },
+      { name: "2kg", price: 2000 },
+      { name: "4kg", price: 3600 },
+    ],
   },
   {
     id: "11",
@@ -101,6 +151,11 @@ const products: Product[] = [
     image: "/seed-starting-soil-mix-fine-substrate-bag.png",
     category: "tierras",
     description: "Sustrato fino ideal para germinación de semillas",
+    options: [
+      { name: "1kg", price: 750 },
+      { name: "2kg", price: 1350 },
+      { name: "5kg", price: 3000 },
+    ],
   },
   {
     id: "12",
@@ -109,6 +164,11 @@ const products: Product[] = [
     image: "/premium-black-soil-bag-rich-organic-matter.png",
     category: "tierras",
     description: "Tierra negra de primera calidad, rica en materia orgánica",
+    options: [
+      { name: "3kg", price: 1350 },
+      { name: "8kg", price: 3200 },
+      { name: "15kg", price: 5800 },
+    ],
   },
 ]
 
@@ -166,7 +226,7 @@ export default function TiendaPage() {
         matchesCategory = true
       } else if (selectedCategory === "plantas") {
         // Show only plants and chips in the "plantas" category
-        matchesCategory = product.category === "plantas-interior"
+        matchesCategory = product.category === "plantas-interior" || product.category === "chips"
       } else {
         matchesCategory = product.category === selectedCategory
       }
@@ -263,14 +323,24 @@ export default function TiendaPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 * index }}
               whileHover={{ y: -5, scale: 1.02 }}
+              className="group relative"
             >
               <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-                <motion.div
-                  className="h-48 bg-cover bg-center"
+                <div
+                  className="h-48 bg-cover bg-center relative group-hover:scale-105 transition-transform duration-300"
                   style={{ backgroundImage: `url('${product.image}')` }}
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ duration: 0.3 }}
-                />
+                >
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      onClick={() => (window.location.href = `/producto/${product.id}`)}
+                      className="bg-white text-black hover:bg-gray-100 shadow-lg"
+                    >
+                      Ver más
+                    </Button>
+                  </div>
+                </div>
                 <CardContent className="p-4">
                   <div className="mb-2">
                     <Badge variant="secondary" className="text-xs">
