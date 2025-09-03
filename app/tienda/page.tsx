@@ -51,7 +51,7 @@ const products: Product[] = [
     name: "Chips Decorativos",
     price: 650,
     image: "/decorative-wood-chips-for-plants.png",
-    category: "chips",
+    category: "tierras", // moved chips from "chips" category to "tierras" category
     description: "Chips de madera natural para decoración y retención de humedad",
   },
   {
@@ -166,7 +166,7 @@ export default function TiendaPage() {
         matchesCategory = true
       } else if (selectedCategory === "plantas") {
         // Show only plants and chips in the "plantas" category
-        matchesCategory = product.category === "plantas-interior" || product.category === "chips"
+        matchesCategory = product.category === "plantas-interior"
       } else {
         matchesCategory = product.category === selectedCategory
       }

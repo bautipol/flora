@@ -18,31 +18,35 @@ export default function HomePage() {
       title: "Pequeños toques, grandes momentos",
       subtitle: "Transforma tu espacio con Flora. Descubre nuestra pasión por las plantas y el diseño natural.",
       cta: "Plantas de interior",
+      link: "/tienda?categoria=plantas-interior", // added specific link for plantas de interior
     },
     {
       url: "/beautiful-indoor-plants-in-decorative-pots.png",
       title: "Plantas que dan vida a tu hogar",
       subtitle: "Encuentra la planta perfecta para cada rincón de tu casa con nuestro asesoramiento personalizado.",
       cta: "Ver plantas",
+      link: "/tienda?categoria=plantas", // added specific link for plantas category
     },
     {
       url: "/decorative-plant-pots-and-containers.png",
       title: "Diseño y funcionalidad unidos",
       subtitle: "Macetas y accesorios únicos que complementan perfectamente tus plantas favoritas.",
       cta: "Ver macetas",
+      link: "/tienda?categoria=macetas", // added specific link for macetas category
     },
     {
       url: "/garden-soil-and-plant-substrates.png",
       title: "Todo lo que tus plantas necesitan",
       subtitle: "Sustratos premium y productos especializados para el crecimiento saludable de tus plantas.",
       cta: "Ver productos",
+      link: "/tienda", // added link to general store
     },
   ]
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroImages.length)
-    }, 5000)
+    }, 8000) // Increased from 5000ms to 8000ms to slow down carousel transitions
     return () => clearInterval(timer)
   }, [heroImages.length])
 
@@ -121,11 +125,13 @@ export default function HomePage() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.8 }}
           >
-            <Link href="/tienda">
+            <Link href={heroImages[currentSlide].link}>
+              {" "}
+              {/* using specific link for each slide */}
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button
                   variant="outline"
-                  className="bg-transparent border-white text-white hover:bg-white hover:text-black transition-all duration-300 text-lg px-8 py-3"
+                  className="bg-white/20 backdrop-blur-md border-white/50 text-white hover:bg-white hover:text-black transition-all duration-300 text-lg px-8 py-3 shadow-lg font-medium" // Added semi-transparent background, backdrop blur, shadow and improved styling for better visibility
                 >
                   {heroImages[currentSlide].cta} →
                 </Button>
@@ -305,7 +311,9 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4 font-serif">Nuestros Servicios</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4 font-serif">
+              Algunos de Nuestros Servicios
+            </h2>
             <p className="text-lg text-muted-foreground">Servicios profesionales de paisajismo y diseño de jardines</p>
           </motion.div>
 

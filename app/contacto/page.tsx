@@ -18,6 +18,7 @@ interface ContactForm {
   nombre: string
   email: string
   telefono: string
+  localidad: string
   servicio: string
   mensaje: string
 }
@@ -28,6 +29,7 @@ export default function ContactoPage() {
     nombre: "",
     email: "",
     telefono: "",
+    localidad: "",
     servicio: "",
     mensaje: "",
   })
@@ -41,6 +43,10 @@ export default function ContactoPage() {
     message += `👤 *Nombre:* ${form.nombre}\n`
     message += `📧 *Email:* ${form.email}\n`
     message += `📱 *Teléfono:* ${form.telefono}\n`
+
+    if (form.localidad) {
+      message += `📍 *Localidad:* ${form.localidad}\n`
+    }
 
     if (form.servicio) {
       message += `🛠️ *Servicio de interés:* ${form.servicio}\n`
@@ -81,6 +87,7 @@ export default function ContactoPage() {
       nombre: "",
       email: "",
       telefono: "",
+      localidad: "",
       servicio: "",
       mensaje: "",
     })
@@ -188,6 +195,20 @@ export default function ContactoPage() {
                       value={form.telefono}
                       onChange={(e) => handleInputChange("telefono", e.target.value)}
                       placeholder="+54 9 11 3561-7412"
+                    />
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.55 }}
+                  >
+                    <Label htmlFor="localidad">Localidad</Label>
+                    <Input
+                      id="localidad"
+                      value={form.localidad}
+                      onChange={(e) => handleInputChange("localidad", e.target.value)}
+                      placeholder="Tu localidad o barrio"
                     />
                   </motion.div>
 
@@ -307,7 +328,7 @@ export default function ContactoPage() {
                     {
                       icon: Mail,
                       title: "Email",
-                      content: "info@flora.com",
+                      content: "floregreengarden21@gmail.com",
                       subtitle: "Respondemos en 24 horas",
                     },
                     {

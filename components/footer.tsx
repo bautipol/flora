@@ -1,5 +1,6 @@
 import Link from "next/link"
-import { Leaf, Instagram, Facebook, Mail, Phone } from "lucide-react"
+import Image from "next/image"
+import { Instagram, Mail, Phone } from "lucide-react"
 
 export function Footer() {
   return (
@@ -7,9 +8,19 @@ export function Footer() {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <Leaf className="h-6 w-6 text-primary" />
-              <span className="text-xl font-bold text-primary font-sans">Flora</span>
+            <div className="flex items-center">
+              <Image
+                src="/flora-logo-new.png"
+                alt="Flora Green Garden"
+                width={180}
+                height={90}
+                className="h-18"
+                quality={100}
+                priority
+                style={{
+                  imageRendering: "crisp-edges",
+                }}
+              />
             </div>
             <p className="text-muted-foreground text-sm">
               Transformamos espacios con la belleza de la naturaleza. Plantas, diseño y paisajismo profesional.
@@ -60,7 +71,7 @@ export function Footer() {
               </div>
               <div className="flex items-center space-x-2">
                 <Mail className="h-4 w-4 text-primary" />
-                <span className="text-sm text-muted-foreground">info@flora.com</span>
+                <span className="text-sm text-muted-foreground">floregreengarden21@gmail.com</span>
               </div>
               <div className="flex space-x-4 mt-4">
                 <Link
@@ -69,9 +80,6 @@ export function Footer() {
                   rel="noopener noreferrer"
                 >
                   <Instagram className="h-5 w-5 text-muted-foreground hover:text-primary cursor-pointer transition-colors" />
-                </Link>
-                <Link href="#" target="_blank" rel="noopener noreferrer">
-                  <Facebook className="h-5 w-5 text-muted-foreground hover:text-primary cursor-pointer transition-colors" />
                 </Link>
               </div>
             </div>

@@ -21,7 +21,6 @@ const services = [
       "Seguimiento personalizado",
       "Recomendaciones de ubicación",
     ],
-    price: "Desde $3,000",
     duration: "1-2 horas",
   },
   {
@@ -35,7 +34,6 @@ const services = [
       "Cronograma de implementación",
       "Supervisión de instalación",
     ],
-    price: "Desde $8,000",
     duration: "1-2 semanas",
   },
   {
@@ -49,7 +47,6 @@ const services = [
       "Iluminación especializada",
       "Mobiliario de jardín",
     ],
-    price: "Desde $12,000",
     duration: "2-3 semanas",
   },
   {
@@ -63,7 +60,6 @@ const services = [
       "Plantas colgantes y trepadoras",
       "Mantenimiento simplificado",
     ],
-    price: "Desde $4,500",
     duration: "3-5 días",
   },
 ]
@@ -153,7 +149,6 @@ export default function ServiciosPage() {
                           <Badge variant="secondary" className="mb-2">
                             {service.duration}
                           </Badge>
-                          <p className="text-lg font-bold text-primary">{service.price}</p>
                         </div>
                       </div>
 

@@ -6,7 +6,6 @@ import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
 import { ShoppingCart, Menu, X, Search } from "lucide-react"
 import { useCart } from "@/contexts/cart-context"
 import Image from "next/image"
@@ -70,27 +69,20 @@ export function Header() {
     <header className="w-full bg-white">
       <div className="container mx-auto px-4">
         {/* Top section with search, logo, and icons */}
-        <div className="flex h-24 items-center justify-between">
+        <div className="flex h-32 items-center justify-between">
           {/* Search bar - left side */}
-          <div className="flex-1 max-w-sm">
+          <div className="flex-1 max-w-xs">
             <div ref={searchRef} className="relative">
               <form onSubmit={handleSearch} className="relative">
-                <Input
+                <input
                   type="text"
-                  placeholder="¿Qué estás buscando?"
+                  placeholder="Buscar producto..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onFocus={handleSearchFocus}
-                  className="pr-10 border-gray-300 focus:border-primary"
+                  className="bg-transparent border-0 border-b border-gray-300 focus:border-primary focus:outline-none pb-2 pr-10 text-gray-700 placeholder-gray-400 transition-colors text-sm tracking-wide w-full"
                 />
-                <Button
-                  type="submit"
-                  size="sm"
-                  variant="ghost"
-                  className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0"
-                >
-                  <Search className="h-4 w-4" />
-                </Button>
+                <Search className="absolute right-0 bottom-2 h-4 w-4 text-gray-400" />
               </form>
 
               {showSuggestions && (
@@ -119,13 +111,13 @@ export function Header() {
           <div className="flex-1 flex justify-center">
             <Link href="/" className="flex items-center">
               <Image
-                src="/flora-logo-clean.png"
+                src="/flora-logo-new.png"
                 alt="Flora Green Garden Paisajismo"
-                width={220}
-                height={110}
+                width={320}
+                height={160}
                 quality={100}
                 priority
-                className="h-20 w-auto object-contain"
+                className="h-28 w-auto object-contain"
                 style={{ imageRendering: "crisp-edges" }}
               />
             </Link>
@@ -135,9 +127,9 @@ export function Header() {
           <div className="flex-1 flex justify-end items-center space-x-4">
             <Link href="/carrito">
               <Button variant="ghost" size="sm" className="relative">
-                <ShoppingCart className="h-5 w-5" />
+                <ShoppingCart className="h-6 w-6" />
                 {itemCount > 0 && (
-                  <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs">
+                  <Badge className="absolute -top-2 -right-2 h-6 w-6 rounded-full p-0 flex items-center justify-center text-xs">
                     {itemCount}
                   </Badge>
                 )}
