@@ -31,7 +31,7 @@ const products: Product[] = [
     id: "2",
     name: "Ficus Lyrata",
     price: 4200,
-    image: "/ficus-lyrata-fiddle-leaf-fig-plant.png",
+    image: "/ficus-lyrata-fiddle-leaf-fig-plant.jpg",
     category: "plantas-interior",
     description: "Elegante planta de hojas grandes, ideal para decoración",
     options: [
@@ -44,7 +44,7 @@ const products: Product[] = [
     id: "3",
     name: "Maceta Cerámica Blanca",
     price: 1800,
-    image: "/white-ceramic-plant-pot.png",
+    image: "/white-ceramic-plant-pot.jpg",
     category: "macetas",
     description: "Maceta de cerámica blanca con diseño minimalista",
     options: [
@@ -57,7 +57,7 @@ const products: Product[] = [
     id: "4",
     name: "Sustrato Universal",
     price: 950,
-    image: "/plant-soil-substrate-bag.png",
+    image: "/plant-soil-substrate-bag.jpg",
     category: "tierras",
     description: "Sustrato rico en nutrientes para todo tipo de plantas",
     options: [
@@ -70,7 +70,7 @@ const products: Product[] = [
     id: "5",
     name: "Chips Decorativos",
     price: 650,
-    image: "/decorative-wood-chips-for-plants.png",
+    image: "/decorative-wood-chips-for-plants.jpg",
     category: "tierras",
     description: "Chips de madera natural para decoración y retención de humedad",
     options: [
@@ -96,7 +96,7 @@ const products: Product[] = [
     id: "7",
     name: "Maceta Terracota",
     price: 1200,
-    image: "/terracotta-clay-plant-pot.png",
+    image: "/terracotta-clay-plant-pot.jpg",
     category: "macetas",
     description: "Maceta de terracota tradicional, ideal para plantas que necesitan drenaje",
     options: [
@@ -109,7 +109,7 @@ const products: Product[] = [
     id: "8",
     name: "Tierra para Cactus",
     price: 850,
-    image: "/cactus-soil-mix-bag.png",
+    image: "/cactus-soil-mix-bag.jpg",
     category: "tierras",
     description: "Mezcla especial para cactus y suculentas con excelente drenaje",
     options: [
@@ -122,7 +122,7 @@ const products: Product[] = [
     id: "9",
     name: "Compost Orgánico",
     price: 1200,
-    image: "/organic-compost-soil-bag-for-plants.png",
+    image: "/organic-compost-soil-bag-for-plants.jpg",
     category: "tierras",
     description: "Compost 100% orgánico, perfecto para enriquecer el suelo",
     options: [
@@ -135,7 +135,7 @@ const products: Product[] = [
     id: "10",
     name: "Tierra para Orquídeas",
     price: 1100,
-    image: "/orchid-soil-mix-bag-specialized-substrate.png",
+    image: "/orchid-soil-mix-bag-specialized-substrate.jpg",
     category: "tierras",
     description: "Mezcla especializada para orquídeas con corteza y musgo",
     options: [
@@ -148,7 +148,7 @@ const products: Product[] = [
     id: "11",
     name: "Sustrato para Semillas",
     price: 750,
-    image: "/seed-starting-soil-mix-fine-substrate-bag.png",
+    image: "/seed-starting-soil-mix-fine-substrate-bag.jpg",
     category: "tierras",
     description: "Sustrato fino ideal para germinación de semillas",
     options: [
@@ -161,7 +161,7 @@ const products: Product[] = [
     id: "12",
     name: "Tierra Negra Premium",
     price: 1350,
-    image: "/premium-black-soil-bag-rich-organic-matter.png",
+    image: "/premium-black-soil-bag-rich-organic-matter.jpg",
     category: "tierras",
     description: "Tierra negra de primera calidad, rica en materia orgánica",
     options: [
