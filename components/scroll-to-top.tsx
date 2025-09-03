@@ -53,7 +53,7 @@ export function ScrollToTop() {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={openWhatsApp}
-        className="fixed bottom-8 right-8 z-50 bg-green-500 hover:bg-green-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 rounded-full w-14 h-14 flex items-center justify-center"
+        className="fixed bottom-8 right-8 z-50 bg-white hover:bg-gray-50 text-green-500 border-2 border-green-500 shadow-lg hover:shadow-xl transition-all duration-300 rounded-full w-14 h-14 flex items-center justify-center"
         aria-label="Contactar por WhatsApp"
       >
         <svg viewBox="0 0 24 24" className="w-7 h-7 fill-current">
