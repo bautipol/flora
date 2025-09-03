@@ -350,7 +350,9 @@ export default function TiendaPage() {
                   <h3 className="font-semibold mb-2 text-balance">{product.name}</h3>
                   <p className="text-sm text-muted-foreground mb-3 text-pretty">{product.description}</p>
                   <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold text-primary">${product.price.toLocaleString()}</span>
+                    <span className="text-lg font-bold text-primary">
+                      desde ${Math.min(...product.options!.map((option) => option.price)).toLocaleString()}
+                    </span>
                     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                       <Button size="sm" onClick={() => addToCart(product)} className="flex items-center gap-2">
                         <ShoppingCart className="h-4 w-4" />

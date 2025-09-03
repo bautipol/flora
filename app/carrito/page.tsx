@@ -60,8 +60,11 @@ export default function CarritoPage() {
 
                     <div className="flex-1">
                       <h3 className="font-semibold text-lg mb-1">{item.name}</h3>
+                      {item.selectedOption && (
+                        <p className="text-sm text-primary font-medium mb-1">{item.selectedOption.name}</p>
+                      )}
                       <p className="text-sm text-muted-foreground mb-3">{item.description}</p>
-                      <p className="text-lg font-bold text-primary">${item.price.toLocaleString()}</p>
+                      <p className="text-lg font-bold text-primary">${item.finalPrice.toLocaleString()}</p>
                     </div>
 
                     <div className="flex flex-col items-end gap-3">
@@ -112,9 +115,10 @@ export default function CarritoPage() {
                   {state.items.map((item) => (
                     <div key={item.id} className="flex justify-between text-sm">
                       <span>
-                        {item.name} x{item.quantity}
+                        {item.name}
+                        {item.selectedOption && ` (${item.selectedOption.name})`} x{item.quantity}
                       </span>
-                      <span>${(item.price * item.quantity).toLocaleString()}</span>
+                      <span>${(item.finalPrice * item.quantity).toLocaleString()}</span>
                     </div>
                   ))}
                 </div>
