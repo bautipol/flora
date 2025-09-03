@@ -149,39 +149,57 @@ export function Header() {
             <nav className="flex flex-col space-y-4">
               <button
                 onClick={() => handleNavigation("/")}
-                className="text-gray-700 hover:text-[rgb(85,107,47)] transition-colors font-medium text-left"
+                className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium text-left relative group hover:scale-105 hover:translate-x-2"
               >
-                INICIO
+                <span className="relative">
+                  INICIO
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
+                </span>
               </button>
               <button
                 onClick={() => handleNavigation("/tienda?categoria=plantas")}
-                className="text-gray-700 hover:text-[rgb(85,107,47)] transition-colors font-medium text-left"
+                className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium text-left relative group hover:scale-105 hover:translate-x-2"
               >
-                PLANTAS
+                <span className="relative">
+                  PLANTAS
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
+                </span>
               </button>
               <button
                 onClick={() => handleNavigation("/tienda?categoria=macetas")}
-                className="text-gray-700 hover:text-[rgb(85,107,47)] transition-colors font-medium text-left"
+                className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium text-left relative group hover:scale-105 hover:translate-x-2"
               >
-                MACETAS
+                <span className="relative">
+                  MACETAS
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
+                </span>
               </button>
               <button
                 onClick={() => handleNavigation("/tienda?categoria=tierras")}
-                className="text-gray-700 hover:text-[rgb(85,107,47)] transition-colors font-medium text-left"
+                className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium text-left relative group hover:scale-105 hover:translate-x-2"
               >
-                TIERRAS
+                <span className="relative">
+                  TIERRAS
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
+                </span>
               </button>
               <button
                 onClick={() => handleNavigation("/servicios")}
-                className="text-gray-700 hover:text-[rgb(85,107,47)] transition-colors font-medium text-left"
+                className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium text-left relative group hover:scale-105 hover:translate-x-2"
               >
-                SERVICIOS
+                <span className="relative">
+                  SERVICIOS
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
+                </span>
               </button>
               <button
                 onClick={() => handleNavigation("/contacto")}
-                className="text-gray-700 hover:text-[rgb(85,107,47)] transition-colors font-medium text-left"
+                className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium text-left relative group hover:scale-105 hover:translate-x-2"
               >
-                CONTACTO
+                <span className="relative">
+                  CONTACTO
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
+                </span>
               </button>
             </nav>
           </div>
@@ -191,39 +209,57 @@ export function Header() {
         <nav className="hidden md:flex items-center justify-center space-x-12 py-4 border-t border-gray-100">
           <button
             onClick={() => handleNavigation("/")}
-            className="text-gray-700 hover:text-[rgb(85,107,47)] transition-colors font-medium"
+            className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium relative group hover:scale-110"
           >
-            INICIO
+            <span className="relative">
+              INICIO
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
+            </span>
           </button>
           <button
             onClick={() => handleNavigation("/tienda?categoria=plantas")}
-            className="text-gray-700 hover:text-[rgb(85,107,47)] transition-colors font-medium"
+            className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium relative group hover:scale-110"
           >
-            PLANTAS
+            <span className="relative">
+              PLANTAS
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
+            </span>
           </button>
           <button
             onClick={() => handleNavigation("/tienda?categoria=macetas")}
-            className="text-gray-700 hover:text-[rgb(85,107,47)] transition-colors font-medium"
+            className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium relative group hover:scale-110"
           >
-            MACETAS
+            <span className="relative">
+              MACETAS
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
+            </span>
           </button>
           <button
             onClick={() => handleNavigation("/tienda?categoria=tierras")}
-            className="text-gray-700 hover:text-[rgb(85,107,47)] transition-colors font-medium"
+            className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium relative group hover:scale-110"
           >
-            TIERRAS
+            <span className="relative">
+              TIERRAS
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
+            </span>
           </button>
           <button
             onClick={() => handleNavigation("/servicios")}
-            className="text-gray-700 hover:text-[rgb(85,107,47)] transition-colors font-medium"
+            className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium relative group hover:scale-110"
           >
-            SERVICIOS
+            <span className="relative">
+              SERVICIOS
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
+            </span>
           </button>
           <button
             onClick={() => handleNavigation("/contacto")}
-            className="text-gray-700 hover:text-[rgb(85,107,47)] transition-colors font-medium"
+            className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium relative group hover:scale-110"
           >
-            CONTACTO
+            <span className="relative">
+              CONTACTO
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
+            </span>
           </button>
         </nav>
       </div>
