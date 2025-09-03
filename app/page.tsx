@@ -18,35 +18,35 @@ export default function HomePage() {
       title: "Pequeños toques, grandes momentos",
       subtitle: "Transforma tu espacio con Flora. Descubre nuestra pasión por las plantas y el diseño natural.",
       cta: "Plantas de interior",
-      link: "/tienda?categoria=plantas-interior", // added specific link for plantas de interior
+      link: "/tienda?categoria=plantas-interior",
     },
     {
       url: "/beautiful-indoor-plants-in-decorative-pots.png",
       title: "Plantas que dan vida a tu hogar",
       subtitle: "Encuentra la planta perfecta para cada rincón de tu casa con nuestro asesoramiento personalizado.",
       cta: "Ver plantas",
-      link: "/tienda?categoria=plantas", // added specific link for plantas category
+      link: "/tienda?categoria=plantas",
     },
     {
       url: "/decorative-plant-pots-and-containers.png",
       title: "Diseño y funcionalidad unidos",
       subtitle: "Macetas y accesorios únicos que complementan perfectamente tus plantas favoritas.",
       cta: "Ver macetas",
-      link: "/tienda?categoria=macetas", // added specific link for macetas category
+      link: "/tienda?categoria=macetas",
     },
     {
       url: "/garden-soil-and-plant-substrates.png",
       title: "Todo lo que tus plantas necesitan",
       subtitle: "Sustratos premium y productos especializados para el crecimiento saludable de tus plantas.",
       cta: "Ver productos",
-      link: "/tienda", // added link to general store
+      link: "/tienda",
     },
   ]
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroImages.length)
-    }, 8000) // Increased from 5000ms to 8000ms to slow down carousel transitions
+    }, 8000)
     return () => clearInterval(timer)
   }, [heroImages.length])
 
@@ -64,15 +64,16 @@ export default function HomePage() {
 
       {/* Hero Section with Image Carousel */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
+        <div className="absolute inset-0" style={{ willChange: "transform" }}>
           {heroImages.map((image, index) => (
             <div
               key={index}
-              className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${
+              className={`absolute inset-0 bg-cover bg-center transition-opacity duration-700 ${
                 index === currentSlide ? "opacity-100" : "opacity-0"
               }`}
               style={{
                 backgroundImage: `url('${image.url}')`,
+                transform: "translate3d(0, 0, 0)", // Force hardware acceleration
               }}
             />
           ))}
@@ -81,7 +82,7 @@ export default function HomePage() {
 
         <button
           onClick={prevSlide}
-          className="absolute left-8 z-20 p-3 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-colors"
+          className="absolute left-8 z-20 p-3 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-colors duration-200"
           aria-label="Imagen anterior"
         >
           <ChevronLeft className="h-6 w-6 text-white" />
@@ -89,67 +90,45 @@ export default function HomePage() {
 
         <button
           onClick={nextSlide}
-          className="absolute right-8 z-20 p-3 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-colors"
+          className="absolute right-8 z-20 p-3 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-colors duration-200"
           aria-label="Siguiente imagen"
         >
           <ChevronRight className="h-6 w-6 text-white" />
         </button>
 
-        <motion.div
-          className="relative z-10 text-left max-w-2xl mx-auto px-8 ml-16"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <motion.h1
-            className="text-5xl md:text-7xl font-serif text-white mb-6 text-balance drop-shadow-lg leading-tight"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+        <div className="relative z-10 text-left max-w-2xl mx-auto px-8 ml-16">
+          <h1
+            className="text-5xl md:text-7xl font-serif text-white mb-6 text-balance drop-shadow-lg leading-tight transition-opacity duration-500"
             key={currentSlide}
           >
             {heroImages[currentSlide].title}
-          </motion.h1>
-          <motion.p
-            className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto text-pretty drop-shadow-md"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+          </h1>
+          <p
+            className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto text-pretty drop-shadow-md transition-opacity duration-500"
             key={`subtitle-${currentSlide}`}
           >
             {heroImages[currentSlide].subtitle}
-          </motion.p>
-          <motion.div
-            className="mb-8"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-          >
+          </p>
+          <div className="mb-8">
             <Link href={heroImages[currentSlide].link}>
-              {" "}
-              {/* using specific link for each slide */}
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button
-                  variant="outline"
-                  className="bg-white/20 backdrop-blur-md border-white/50 text-white hover:bg-white hover:text-black transition-all duration-300 text-lg px-8 py-3 shadow-lg font-medium" // Added semi-transparent background, backdrop blur, shadow and improved styling for better visibility
-                >
-                  {heroImages[currentSlide].cta} →
-                </Button>
-              </motion.div>
+              <Button
+                variant="outline"
+                className="bg-white/20 backdrop-blur-md border-white/50 text-white hover:bg-white hover:text-black transition-all duration-200 text-lg px-8 py-3 shadow-lg font-medium"
+              >
+                {heroImages[currentSlide].cta} →
+              </Button>
             </Link>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex space-x-3">
           {heroImages.map((_, index) => (
-            <motion.button
+            <button
               key={index}
               onClick={() => setCurrentSlide(index)}
-              className={`w-4 h-4 rounded-full transition-all duration-300 ${
+              className={`w-4 h-4 rounded-full transition-all duration-200 ${
                 index === currentSlide ? "bg-white" : "bg-white/50"
               }`}
-              whileHover={{ scale: 1.2 }}
-              whileTap={{ scale: 0.9 }}
               aria-label={`Ir a imagen ${index + 1}`}
             />
           ))}
@@ -161,10 +140,10 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <motion.div
             className="max-w-4xl mx-auto text-center mb-12"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true, margin: "-100px" }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-primary mb-6 font-serif">Nuestra Historia</h2>
             <p className="text-lg text-muted-foreground text-pretty">
@@ -198,17 +177,14 @@ export default function HomePage() {
             ].map((card, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5, scale: 1.02 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                viewport={{ once: true, margin: "-50px" }}
               >
-                <Card className="text-center hover:shadow-lg transition-shadow">
+                <Card className="text-center hover:shadow-lg transition-shadow duration-200">
                   <CardContent className="p-6">
-                    <motion.div whileHover={{ scale: 1.1, rotate: 5 }} transition={{ duration: 0.3 }}>
-                      <card.icon className="h-12 w-12 text-primary mx-auto mb-4" />
-                    </motion.div>
+                    <card.icon className="h-12 w-12 text-primary mx-auto mb-4" />
                     <h3 className="text-xl font-semibold mb-2">{card.title}</h3>
                     <p className="text-muted-foreground">{card.description}</p>
                   </CardContent>
@@ -224,10 +200,10 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <motion.div
             className="text-center mb-12"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true, margin: "-100px" }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4 font-serif">Productos Destacados</h2>
             <p className="text-lg text-muted-foreground">
@@ -259,19 +235,13 @@ export default function HomePage() {
             ].map((product, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -10, scale: 1.02 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                viewport={{ once: true, margin: "-50px" }}
               >
-                <Card className="overflow-hidden hover:shadow-xl transition-shadow">
-                  <motion.div
-                    className="h-48 bg-cover bg-center"
-                    style={{ backgroundImage: `url('${product.image}')` }}
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
-                  />
+                <Card className="overflow-hidden hover:shadow-xl transition-shadow duration-200">
+                  <div className="h-48 bg-cover bg-center" style={{ backgroundImage: `url('${product.image}')` }} />
                   <CardContent className="p-6">
                     <h3 className="text-xl font-semibold mb-2">{product.title}</h3>
                     <p className="text-muted-foreground mb-4">{product.description}</p>
@@ -286,16 +256,14 @@ export default function HomePage() {
             className="text-center"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.4 }}
             viewport={{ once: true }}
           >
             <Link href="/tienda">
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button size="lg">
-                  Ver Todos los Productos
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </motion.div>
+              <Button size="lg" className="transition-transform duration-200 hover:scale-105">
+                Ver Todos los Productos
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
             </Link>
           </motion.div>
         </div>
@@ -306,10 +274,10 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <motion.div
             className="text-center mb-12"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true, margin: "-100px" }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4 font-serif">
               Algunos de Nuestros Servicios
@@ -347,30 +315,19 @@ export default function HomePage() {
             ].map((service, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, x: index === 0 ? -30 : 30 }}
+                initial={{ opacity: 0, x: index === 0 ? -20 : 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true, margin: "-50px" }}
               >
-                <Card className="hover:shadow-lg transition-shadow">
+                <Card className="hover:shadow-lg transition-shadow duration-200">
                   <CardContent className="p-8">
-                    <motion.div whileHover={{ scale: 1.1, rotate: 5 }} transition={{ duration: 0.3 }}>
-                      <service.icon className="h-12 w-12 text-primary mb-4" />
-                    </motion.div>
+                    <service.icon className="h-12 w-12 text-primary mb-4" />
                     <h3 className="text-2xl font-semibold mb-4">{service.title}</h3>
                     <p className="text-muted-foreground mb-4">{service.description}</p>
                     <ul className="text-sm text-muted-foreground space-y-2">
                       {service.features.map((feature, featureIndex) => (
-                        <motion.li
-                          key={featureIndex}
-                          initial={{ opacity: 0, x: -10 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ duration: 0.4, delay: featureIndex * 0.1 }}
-                          viewport={{ once: true }}
-                        >
-                          • {feature}
-                        </motion.li>
+                        <li key={featureIndex}>• {feature}</li>
                       ))}
                     </ul>
                   </CardContent>
@@ -383,15 +340,17 @@ export default function HomePage() {
             className="text-center mt-8"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.4 }}
             viewport={{ once: true }}
           >
             <Link href="/contacto">
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button size="lg" variant="outline" className="bg-transparent">
-                  Solicitar Consulta
-                </Button>
-              </motion.div>
+              <Button
+                size="lg"
+                variant="outline"
+                className="bg-transparent transition-transform duration-200 hover:scale-105"
+              >
+                Solicitar Consulta
+              </Button>
             </Link>
           </motion.div>
         </div>
