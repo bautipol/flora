@@ -15,28 +15,28 @@ export default function HomePage() {
   const heroImages = [
     {
       url: "/lush-green-garden-with-beautiful-plants-and-flower.png",
-      title: "Pequeños toques, grandes momentos",
-      subtitle: "Transforma tu espacio con Flora. Descubre nuestra pasión por las plantas y el diseño natural.",
+      title: "Transforma tu espacio con Flora",
+      subtitle: "Descubrí nuestra pasión por las plantas y el diseño natural.",
       cta: "Plantas de interior",
       link: "/tienda?categoria=plantas-interior",
     },
     {
       url: "/beautiful-indoor-plants-in-decorative-pots.png",
-      title: "Plantas que dan vida a tu hogar",
+      title: "Plantas que dan vida a tu hogar.",
       subtitle: "Encuentra la planta perfecta para cada rincón de tu casa con nuestro asesoramiento personalizado.",
       cta: "Ver plantas",
       link: "/tienda?categoria=plantas",
     },
     {
       url: "/decorative-plant-pots-and-containers.png",
-      title: "Diseño y funcionalidad unidos",
+      title: "Diseño y funcionalidad.",
       subtitle: "Macetas y accesorios únicos que complementan perfectamente tus plantas favoritas.",
       cta: "Ver macetas",
       link: "/tienda?categoria=macetas",
     },
     {
       url: "/garden-soil-and-plant-substrates.png",
-      title: "Todo lo que tus plantas necesitan",
+      title: "Todo lo que tus plantas necesitan.",
       subtitle: "Sustratos premium y productos especializados para el crecimiento saludable de tus plantas.",
       cta: "Ver productos",
       link: "/tienda",
@@ -145,7 +145,7 @@ export default function HomePage() {
             transition={{ duration: 0.5 }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-6 font-serif">Nuestra Historia</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-6 font-serif">Nuestra historia.</h2>
             <p className="text-lg text-muted-foreground text-pretty">
               Flora nació de la unión de dos amigas apasionadas por el diseño y el amor por la naturaleza. Lo que
               comenzó como la comercialización de plantas e insumos para el jardín, evolucionó hacia el paisajismo,
@@ -160,19 +160,18 @@ export default function HomePage() {
                 icon: Heart,
                 title: "Pasión por la Naturaleza",
                 description:
-                  "Cada planta que ofrecemos refleja nuestro amor genuino por la naturaleza y el cuidado del medio ambiente.",
+                  "Nuestro trabajo refleja el amor genuino por la naturaleza y el cuidado del medio ambiente.",
               },
               {
                 icon: Users,
                 title: "Equipo Especializado",
                 description:
-                  "Dos amigas unidas por la pasión del diseño, ofreciendo asesorías personalizadas y servicios profesionales.",
+                  "Ofrecemos asesoría personal y servicio profesional a arquitectos, empresas y particulares.",
               },
               {
                 icon: Award,
                 title: "Calidad Garantizada",
-                description:
-                  "Seleccionamos cuidadosamente cada producto para garantizar la mejor calidad y durabilidad.",
+                description: "Seleccionamos cuidadosa y personalmente cada producto.",
               },
             ].map((card, index) => (
               <motion.div
@@ -205,10 +204,8 @@ export default function HomePage() {
             transition={{ duration: 0.5 }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4 font-serif">Productos Destacados</h2>
-            <p className="text-lg text-muted-foreground">
-              Descubre nuestra selección de plantas y accesorios más populares
-            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4 font-serif">Productos destacados.</h2>
+            <p className="text-lg text-muted-foreground">Descubre nuestra selección de plantas y accesorios.</p>
           </motion.div>
 
           {/* Featured Products Grid */}
@@ -216,20 +213,20 @@ export default function HomePage() {
             {[
               {
                 image: "/beautiful-indoor-plants-in-decorative-pots.png",
-                title: "Plantas de Interior",
-                description: "Perfectas para dar vida a cualquier espacio interior",
+                title: "Plantas de interior",
+                description: "Perfectas para dar vida a cualquier hogar.",
                 price: "Desde $2,500",
               },
               {
                 image: "/decorative-plant-pots-and-containers.png",
-                title: "Macetas Decorativas",
-                description: "Diseños únicos para complementar tus plantas",
+                title: "Macetas decorativas",
+                description: "Diseños únicos para complementar tus plantas.",
                 price: "Desde $1,200",
               },
               {
                 image: "/garden-soil-and-plant-substrates.png",
-                title: "Tierras y Sustratos",
-                description: "La base perfecta para el crecimiento saludable",
+                title: "Sustratos",
+                description: "La base perfecta para el crecimiento saludable.",
                 price: "Desde $800",
               },
             ].map((product, index) => (
@@ -280,9 +277,9 @@ export default function HomePage() {
             viewport={{ once: true, margin: "-100px" }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4 font-serif">
-              Algunos de Nuestros Servicios
+              Algunos de nuestros servicios.
             </h2>
-            <p className="text-lg text-muted-foreground">Servicios profesionales de paisajismo y diseño de jardines</p>
+            <p className="text-lg text-muted-foreground">Servicios profesionales de paisajismo y diseño de jardines.</p>
           </motion.div>
 
           {/* Services Grid */}
@@ -303,8 +300,7 @@ export default function HomePage() {
               {
                 icon: Users,
                 title: "Diseño y Remodelación",
-                description:
-                  "Transformamos jardines, terrazas y balcones en espacios únicos que reflejan tu personalidad y estilo.",
+                description: "Transformamos tus espacios:",
                 features: [
                   "Diseño de jardines",
                   "Remodelación de terrazas",

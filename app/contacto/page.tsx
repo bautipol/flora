@@ -133,7 +133,7 @@ export default function ContactoPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Estamos aquí para ayudarte a crear el jardín de tus sueños. Contáctanos para una consulta personalizada.
+            Estamos aquí para ayudarte a crear el jardín de tus sueños.
           </motion.p>
         </div>
       </motion.section>
@@ -323,25 +323,31 @@ export default function ContactoPage() {
                       icon: Phone,
                       title: "Teléfono",
                       content: "+54 9 11 3561-7412",
-                      subtitle: "Lunes a Viernes: 9:00 - 18:00",
+                      subtitle: "Lunes a Viernes: 9:00 - 18:00.",
+                    },
+                    {
+                      icon: Phone,
+                      title: "Teléfono 2",
+                      content: "+54 9 11 5492-5718",
+                      subtitle: "Línea alternativa disponible.",
                     },
                     {
                       icon: Mail,
                       title: "Email",
                       content: "floregreengarden21@gmail.com",
-                      subtitle: "Respondemos en 24 horas",
+                      subtitle: "Respondemos en 24 horas.",
                     },
                     {
                       icon: MapPin,
                       title: "Ubicación",
                       content: "Buenos Aires, Argentina",
-                      subtitle: "Servicio a domicilio en CABA y GBA",
+                      subtitle: "Servicio a domicilio en CABA y GBA.",
                     },
                     {
                       icon: Clock,
                       title: "Horarios",
                       content: "Lunes a Viernes: 9:00 - 18:00",
-                      subtitle: "Sábados: 9:00 - 15:00 • Domingos: Cerrado",
+                      subtitle: "Sábados: 9:00 - 15:00 • Domingos: Cerrado.",
                     },
                   ].map((item, index) => (
                     <motion.div
@@ -378,7 +384,7 @@ export default function ContactoPage() {
                     </motion.div>
                     <h3 className="text-xl font-semibold mb-2">¿Necesitas ayuda inmediata?</h3>
                     <p className="text-muted-foreground mb-4">
-                      Chatea con nosotros por WhatsApp para una respuesta rápida
+                      Chatea con nosotros por WhatsApp para una respuesta rápida.
                     </p>
                     <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                       <Button onClick={openWhatsApp} className="w-full">
@@ -398,28 +404,10 @@ export default function ContactoPage() {
             >
               <Card>
                 <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold mb-4 text-primary">Consulta Gratuita</h3>
+                  <h3 className="text-xl font-semibold mb-4 text-primary">Nuestros servicios</h3>
                   <p className="text-muted-foreground mb-4">
-                    Ofrecemos una consulta inicial gratuita para evaluar tu espacio y discutir tus ideas. Sin
-                    compromiso.
+                    Ofrecemos servicios de paisajismo, diseño de jardines y mantenimiento.
                   </p>
-                  <ul className="text-sm text-muted-foreground space-y-2">
-                    {[
-                      "Evaluación del espacio",
-                      "Recomendaciones iniciales",
-                      "Presupuesto aproximado",
-                      "Plan de trabajo sugerido",
-                    ].map((item, index) => (
-                      <motion.li
-                        key={index}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.4, delay: 0.9 + index * 0.1 }}
-                      >
-                        • {item}
-                      </motion.li>
-                    ))}
-                  </ul>
                 </CardContent>
               </Card>
             </motion.div>

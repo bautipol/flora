@@ -22,9 +22,6 @@ export function Footer() {
                 }}
               />
             </div>
-            <p className="text-muted-foreground text-sm">
-              Transformamos espacios con la belleza de la naturaleza. Plantas, diseño y paisajismo profesional.
-            </p>
           </div>
 
           <div>
@@ -54,11 +51,12 @@ export function Footer() {
           <div>
             <h3 className="font-semibold mb-4">Productos</h3>
             <div className="space-y-2">
+              <p className="text-sm text-muted-foreground">Macetas armadas</p>
               <p className="text-sm text-muted-foreground">Plantas de interior</p>
               <p className="text-sm text-muted-foreground">Plantas de exterior</p>
               <p className="text-sm text-muted-foreground">Macetas y contenedores</p>
-              <p className="text-sm text-muted-foreground">Tierras y sustratos</p>
-              <p className="text-sm text-muted-foreground">Chips y decoración</p>
+              <p className="text-sm text-muted-foreground">Sustratos y chips</p>
+              <p className="text-sm text-muted-foreground">Accesorios</p>
             </div>
           </div>
 
@@ -68,6 +66,10 @@ export function Footer() {
               <div className="flex items-center space-x-2">
                 <Phone className="h-4 w-4 text-primary" />
                 <span className="text-sm text-muted-foreground">+54 9 11 3561-7412</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Phone className="h-4 w-4 text-primary" />
+                <span className="text-sm text-muted-foreground">+54 9 11 5492-5718</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Mail className="h-4 w-4 text-primary" />

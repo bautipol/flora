@@ -5,7 +5,6 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Leaf, Users, Lightbulb, Palette, CheckCircle, ArrowRight } from "lucide-react"
 import Link from "next/link"
 
@@ -21,7 +20,6 @@ const services = [
       "Seguimiento personalizado",
       "Recomendaciones de ubicación",
     ],
-    duration: "1-2 horas",
   },
   {
     icon: Palette,
@@ -34,7 +32,6 @@ const services = [
       "Cronograma de implementación",
       "Supervisión de instalación",
     ],
-    duration: "1-2 semanas",
   },
   {
     icon: Users,
@@ -47,7 +44,6 @@ const services = [
       "Iluminación especializada",
       "Mobiliario de jardín",
     ],
-    duration: "2-3 semanas",
   },
   {
     icon: Leaf,
@@ -60,7 +56,6 @@ const services = [
       "Plantas colgantes y trepadoras",
       "Mantenimiento simplificado",
     ],
-    duration: "3-5 días",
   },
 ]
 
@@ -83,7 +78,7 @@ export default function ServiciosPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Nuestros Servicios
+            Nuestros servicios.
           </motion.h1>
           <motion.p
             className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto text-pretty"
@@ -144,14 +139,6 @@ export default function ServiciosPage() {
                         ))}
                       </div>
 
-                      <div className="flex items-center justify-between mb-6">
-                        <div>
-                          <Badge variant="secondary" className="mb-2">
-                            {service.duration}
-                          </Badge>
-                        </div>
-                      </div>
-
                       <Link href="/contacto">
                         <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                           <Button className="w-full">
@@ -179,9 +166,9 @@ export default function ServiciosPage() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4 font-sans">Nuestro Proceso</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4 font-sans">Nuestro proceso.</h2>
             <p className="text-lg text-muted-foreground">
-              Trabajamos contigo paso a paso para crear el jardín de tus sueños
+              Trabajamos contigo paso a paso para crear el jardín de tus sueños.
             </p>
           </motion.div>
 
@@ -190,22 +177,22 @@ export default function ServiciosPage() {
               {
                 number: "1",
                 title: "Consulta Inicial",
-                description: "Conversamos sobre tus ideas, necesidades y presupuesto",
+                description: "Conversamos sobre tus ideas, necesidades y presupuesto.",
               },
               {
                 number: "2",
                 title: "Evaluación",
-                description: "Visitamos tu espacio y analizamos las condiciones",
+                description: "Visitamos tu espacio y analizamos las condiciones.",
               },
               {
                 number: "3",
                 title: "Propuesta",
-                description: "Creamos un diseño personalizado con presupuesto detallado",
+                description: "Creamos un diseño personalizado con presupuesto detallado.",
               },
               {
                 number: "4",
                 title: "Implementación",
-                description: "Ejecutamos el proyecto con seguimiento constante",
+                description: "Ejecutamos el proyecto con seguimiento constante.",
               },
             ].map((step, index) => (
               <motion.div
