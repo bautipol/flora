@@ -67,7 +67,7 @@ export function Header() {
 
   return (
     <header className="w-full bg-white">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 relative">
         {/* Top section with search, logo, and icons */}
         <div className="flex h-32 items-center justify-between">
           {/* Search bar - left side */}
@@ -108,7 +108,7 @@ export function Header() {
           </div>
 
           {/* Logo - center */}
-          <div className="flex-1 flex justify-center">
+          <div className="absolute left-1/2 transform -translate-x-1/2">
             <Link href="/" className="flex items-center">
               <Image
                 src="/flora-logo-new.png"
