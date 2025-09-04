@@ -86,8 +86,7 @@ export default function ServiciosPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Ofrecemos servicios profesionales de paisajismo y diseño de jardines. Desde asesorías personalizadas hasta
-            proyectos integrales de remodelación.
+            Ofrecemos servicios profesionales de paisajismo , diseño de jardines y mantenimiento. 
           </motion.p>
         </div>
       </motion.section>

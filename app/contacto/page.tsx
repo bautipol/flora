@@ -396,21 +396,6 @@ export default function ContactoPage() {
                 </CardContent>
               </Card>
             </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.9 }}
-            >
-              <Card>
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold mb-4 text-primary">Nuestros servicios</h3>
-                  <p className="text-muted-foreground mb-4">
-                    Ofrecemos servicios de paisajismo, diseño de jardines y mantenimiento.
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
           </motion.div>
         </div>
       </div>

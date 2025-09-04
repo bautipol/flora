@@ -6,16 +6,20 @@ import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { ShoppingCart, Menu, X, Search } from "lucide-react"
+import { ShoppingCart, Menu, X, Search, ChevronDown } from "lucide-react"
 import { useCart } from "@/contexts/cart-context"
 import Image from "next/image"
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isPlantsDropdownOpen, setIsPlantsDropdownOpen] = useState(false)
+  const [isMacetasDropdownOpen, setIsMacetasDropdownOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [currentSuggestionIndex, setCurrentSuggestionIndex] = useState(0)
   const searchRef = useRef<HTMLDivElement>(null)
+  const plantsDropdownRef = useRef<HTMLDivElement>(null)
+  const macetasDropdownRef = useRef<HTMLDivElement>(null)
   const { state } = useCart()
   const router = useRouter()
 
@@ -34,6 +38,12 @@ export function Header() {
     const handleClickOutside = (event: MouseEvent) => {
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
         setShowSuggestions(false)
+      }
+      if (plantsDropdownRef.current && !plantsDropdownRef.current.contains(event.target as Node)) {
+        setIsPlantsDropdownOpen(false)
+      }
+      if (macetasDropdownRef.current && !macetasDropdownRef.current.contains(event.target as Node)) {
+        setIsMacetasDropdownOpen(false)
       }
     }
 
@@ -63,6 +73,8 @@ export function Header() {
   const handleNavigation = (href: string) => {
     router.push(href)
     setIsMenuOpen(false)
+    setIsPlantsDropdownOpen(false)
+    setIsMacetasDropdownOpen(false)
   }
 
   return (
@@ -156,30 +168,78 @@ export function Header() {
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
                 </span>
               </button>
-              <button
-                onClick={() => handleNavigation("/tienda?categoria=plantas")}
-                className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium text-left relative group hover:scale-105 hover:translate-x-2"
-              >
-                <span className="relative">
-                  PLANTAS
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
-                </span>
-              </button>
-              <button
-                onClick={() => handleNavigation("/tienda?categoria=macetas")}
-                className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium text-left relative group hover:scale-105 hover:translate-x-2"
-              >
-                <span className="relative">
-                  MACETAS
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
-                </span>
-              </button>
+              <div className="space-y-2">
+                <button
+                  onClick={() => setIsPlantsDropdownOpen(!isPlantsDropdownOpen)}
+                  className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium text-left relative group hover:scale-105 hover:translate-x-2 flex items-center"
+                >
+                  <span className="relative">
+                    PLANTAS
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
+                  </span>
+                  <ChevronDown
+                    className={`ml-1 h-3 w-3 transition-transform ${isPlantsDropdownOpen ? "rotate-180" : ""}`}
+                  />
+                </button>
+                {isPlantsDropdownOpen && (
+                  <div className="ml-4 space-y-2">
+                    <button
+                      onClick={() => handleNavigation("/tienda?categoria=plantas-interior")}
+                      className="text-gray-600 hover:text-[rgb(85,107,47)] transition-all duration-300 text-sm text-left block"
+                    >
+                      Plantas de interior
+                    </button>
+                    <button
+                      onClick={() => handleNavigation("/tienda?categoria=plantas-exterior")}
+                      className="text-gray-600 hover:text-[rgb(85,107,47)] transition-all duration-300 text-sm text-left block"
+                    >
+                      Plantas de exterior
+                    </button>
+                  </div>
+                )}
+              </div>
+              <div className="space-y-2">
+                <button
+                  onClick={() => setIsMacetasDropdownOpen(!isMacetasDropdownOpen)}
+                  className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium text-left relative group hover:scale-105 hover:translate-x-2 flex items-center"
+                >
+                  <span className="relative">
+                    MACETAS
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
+                  </span>
+                  <ChevronDown
+                    className={`ml-1 h-3 w-3 transition-transform ${isMacetasDropdownOpen ? "rotate-180" : ""}`}
+                  />
+                </button>
+                {isMacetasDropdownOpen && (
+                  <div className="ml-4 space-y-2">
+                    <button
+                      onClick={() => handleNavigation("/contacto")}
+                      className="text-gray-600 hover:text-[rgb(85,107,47)] transition-all duration-300 text-sm text-left block"
+                    >
+                      Macetas ultralivianas
+                    </button>
+                    <button
+                      onClick={() => handleNavigation("/contacto")}
+                      className="text-gray-600 hover:text-[rgb(85,107,47)] transition-all duration-300 text-sm text-left block"
+                    >
+                      Macetas de cemento (consultar)
+                    </button>
+                    <button
+                      onClick={() => handleNavigation("/tienda?categoria=macetas")}
+                      className="text-gray-600 hover:text-[rgb(85,107,47)] transition-all duration-300 text-sm text-left block"
+                    >
+                      Plantas con macetas
+                    </button>
+                  </div>
+                )}
+              </div>
               <button
                 onClick={() => handleNavigation("/tienda?categoria=tierras")}
                 className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium text-left relative group hover:scale-105 hover:translate-x-2"
               >
                 <span className="relative">
-                  TIERRAS
+                  SUSTRATOS
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
                 </span>
               </button>
@@ -216,30 +276,82 @@ export function Header() {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
             </span>
           </button>
-          <button
-            onClick={() => handleNavigation("/tienda?categoria=plantas")}
-            className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium relative group hover:scale-110"
-          >
-            <span className="relative">
-              PLANTAS
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
-            </span>
-          </button>
-          <button
-            onClick={() => handleNavigation("/tienda?categoria=macetas")}
-            className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium relative group hover:scale-110"
-          >
-            <span className="relative">
-              MACETAS
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
-            </span>
-          </button>
+          <div ref={plantsDropdownRef} className="relative">
+            <button
+              onClick={() => setIsPlantsDropdownOpen(!isPlantsDropdownOpen)}
+              className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium relative group hover:scale-110 flex items-center"
+            >
+              <span className="relative">
+                PLANTAS
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
+              </span>
+              <ChevronDown
+                className={`ml-1 h-3 w-3 transition-transform ${isPlantsDropdownOpen ? "rotate-180" : ""}`}
+              />
+            </button>
+            {isPlantsDropdownOpen && (
+              <div className="absolute top-full left-0 mt-2 bg-white border border-gray-200 rounded-md shadow-lg z-50 min-w-48">
+                <div className="py-2">
+                  <button
+                    onClick={() => handleNavigation("/tienda?categoria=plantas-interior")}
+                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[rgb(85,107,47)] transition-colors"
+                  >
+                    Plantas de interior
+                  </button>
+                  <button
+                    onClick={() => handleNavigation("/tienda?categoria=plantas-exterior")}
+                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[rgb(85,107,47)] transition-colors"
+                  >
+                    Plantas de exterior
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+          <div ref={macetasDropdownRef} className="relative">
+            <button
+              onClick={() => setIsMacetasDropdownOpen(!isMacetasDropdownOpen)}
+              className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium relative group hover:scale-110 flex items-center"
+            >
+              <span className="relative">
+                MACETAS
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
+              </span>
+              <ChevronDown
+                className={`ml-1 h-3 w-3 transition-transform ${isMacetasDropdownOpen ? "rotate-180" : ""}`}
+              />
+            </button>
+            {isMacetasDropdownOpen && (
+              <div className="absolute top-full left-0 mt-2 bg-white border border-gray-200 rounded-md shadow-lg z-50 min-w-64">
+                <div className="py-2">
+                  <button
+                    onClick={() => handleNavigation("/contacto")}
+                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[rgb(85,107,47)] transition-colors"
+                  >
+                    Macetas ultralivianas
+                  </button>
+                  <button
+                    onClick={() => handleNavigation("/contacto")}
+                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[rgb(85,107,47)] transition-colors"
+                  >
+                    Macetas de cemento (consultar)
+                  </button>
+                  <button
+                    onClick={() => handleNavigation("/tienda?categoria=macetas")}
+                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[rgb(85,107,47)] transition-colors"
+                  >
+                    Plantas con macetas
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
           <button
             onClick={() => handleNavigation("/tienda?categoria=tierras")}
             className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium relative group hover:scale-110"
           >
             <span className="relative">
-              TIERRAS
+              SUSTRATOS
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
             </span>
           </button>
