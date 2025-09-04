@@ -174,7 +174,7 @@ const products: Product[] = [
     id: "13",
     name: "Areca",
     price: 4500,
-    image: "/placeholder-1fj5m.png",
+    image: "/areca-palm-plant-in-pot-indoor-houseplant.jpg",
     category: "plantas-interior",
     description: "Palmera elegante que purifica el aire, ideal para interiores luminosos.",
     options: [
@@ -187,7 +187,7 @@ const products: Product[] = [
     id: "14",
     name: "Gomero",
     price: 3800,
-    image: "/placeholder-ijxyl.png",
+    image: "/ficus-elastica-rubber-plant-glossy-leaves-pot.jpg",
     category: "plantas-interior",
     description: "Planta robusta de hojas brillantes, perfecta para decoración moderna.",
     options: [
@@ -200,7 +200,7 @@ const products: Product[] = [
     id: "15",
     name: "Palmito",
     price: 5200,
-    image: "/placeholder-mkc3f.png",
+    image: "/chamaedorea-elegans-parlor-palm-small-indoor-plant.jpg",
     category: "plantas-interior",
     description: "Palmera compacta de crecimiento lento, ideal para espacios pequeños.",
     options: [
@@ -213,7 +213,7 @@ const products: Product[] = [
     id: "16",
     name: "Yucca",
     price: 4200,
-    image: "/placeholder-6gp1v.png",
+    image: "/yucca-plant-sword-shaped-leaves-indoor-houseplant.jpg",
     category: "plantas-interior",
     description: "Planta resistente con hojas en forma de espada, muy fácil de cuidar.",
     options: [
@@ -226,7 +226,7 @@ const products: Product[] = [
     id: "17",
     name: "Raphis",
     price: 6800,
-    image: "/placeholder-m9euz.png",
+    image: "/rhapis-excelsa-lady-palm-fan-shaped-leaves-indoor.jpg",
     category: "plantas-interior",
     description: "Palmera de interior elegante con múltiples tallos y hojas en abanico.",
     options: [
@@ -239,7 +239,7 @@ const products: Product[] = [
     id: "18",
     name: "Spatiphyllum",
     price: 3200,
-    image: "/placeholder-kjo4y.png",
+    image: "/spathiphyllum-peace-lily-white-flowers-green-leave.jpg",
     category: "plantas-interior",
     description: "Planta purificadora con elegantes flores blancas, perfecta para interiores.",
     options: [
@@ -252,7 +252,7 @@ const products: Product[] = [
     id: "19",
     name: "Sansiveria",
     price: 2800,
-    image: "/placeholder-j6qq5.png",
+    image: "/sansevieria-snake-plant-tall-upright-leaves-indoor.jpg",
     category: "plantas-interior",
     description: "Planta muy resistente que tolera poca luz y riegos esporádicos.",
     options: [
@@ -265,7 +265,7 @@ const products: Product[] = [
     id: "20",
     name: "Philodendro",
     price: 3500,
-    image: "/placeholder-kjpjf.png",
+    image: "/philodendron-heart-shaped-leaves-climbing-plant-po.jpg",
     category: "plantas-interior",
     description: "Planta trepadora de hojas en forma de corazón, ideal para colgar.",
     options: [
@@ -278,7 +278,7 @@ const products: Product[] = [
     id: "21",
     name: "Marginata",
     price: 4800,
-    image: "/placeholder-wjmjl.png",
+    image: "/dracaena-marginata-dragon-tree-red-edges-leaves-in.jpg",
     category: "plantas-interior",
     description: "Árbol de interior con hojas largas y bordes rojizos, muy decorativo.",
     options: [
@@ -291,7 +291,7 @@ const products: Product[] = [
     id: "22",
     name: "Aglonema",
     price: 3800,
-    image: "/placeholder-qkis4.png",
+    image: "/aglaonema-colorful-variegated-leaves-indoor-housep.jpg",
     category: "plantas-interior",
     description: "Planta de hojas coloridas que aporta vida y color a cualquier espacio.",
     options: [
@@ -304,7 +304,7 @@ const products: Product[] = [
     id: "23",
     name: "Alocasia",
     price: 5500,
-    image: "/placeholder-bdqke.png",
+    image: "/alocasia-elephant-ear-large-leaves-indoor-tropical.jpg",
     category: "plantas-interior",
     description: "Planta exótica de hojas grandes y vistosas, perfecta como punto focal.",
     options: [
@@ -317,7 +317,7 @@ const products: Product[] = [
     id: "24",
     name: "Syngonium",
     price: 2900,
-    image: "/placeholder-pxu6i.png",
+    image: "/syngonium-arrowhead-plant-climbing-vine-indoor-pot.jpg",
     category: "plantas-interior",
     description: "Planta trepadora de hojas en forma de flecha, muy adaptable.",
     options: [
@@ -330,7 +330,7 @@ const products: Product[] = [
     id: "25",
     name: "Calathea",
     price: 4200,
-    image: "/placeholder-qdrlc.png",
+    image: "/calathea-prayer-plant-patterned-leaves-indoor-hous.jpg",
     category: "plantas-interior",
     description: "Planta de hojas decorativas con patrones únicos, ideal para interiores húmedos.",
     options: [
@@ -343,7 +343,7 @@ const products: Product[] = [
     id: "26",
     name: "Aphelandra",
     price: 3600,
-    image: "/placeholder-rsmr9.png",
+    image: "/aphelandra-zebra-plant-striped-leaves-yellow-flowe.jpg",
     category: "plantas-interior",
     description: "Planta llamativa con hojas rayadas y flores amarillas brillantes.",
     options: [
@@ -356,7 +356,7 @@ const products: Product[] = [
     id: "27",
     name: "Tradiscantia",
     price: 2200,
-    image: "/placeholder-rp60m.png",
+    image: "/tradiscantia-wandering-jew-colorful-trailing-plant.jpg",
     category: "plantas-interior",
     description: "Planta colgante de hojas coloridas, perfecta para cestas colgantes.",
     options: [
@@ -369,7 +369,7 @@ const products: Product[] = [
     id: "28",
     name: "Helecho Asplenium",
     price: 3200,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "/placeholder-pnt4e.png",
     category: "plantas-interior",
     description: "Helecho de interior con frondas brillantes, ideal para baños y cocinas.",
     options: [
@@ -382,7 +382,7 @@ const products: Product[] = [
     id: "29",
     name: "Strelitzia Nicolai",
     price: 8500,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "/placeholder-g2cxg.png",
     category: "plantas-exterior",
     description: "Ave del paraíso gigante con hojas enormes, perfecta para jardines tropicales.",
     options: [
@@ -395,7 +395,7 @@ const products: Product[] = [
     id: "30",
     name: "Strelitzia Reginae",
     price: 6800,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "/strelitzia-reginae-bird-of-paradise-orange-blue-fl.jpg",
     category: "plantas-exterior",
     description: "Ave del paraíso clásica con flores naranjas y azules espectaculares.",
     options: [
@@ -408,7 +408,7 @@ const products: Product[] = [
     id: "31",
     name: "Alocasia Exterior",
     price: 7200,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "/alocasia-elephant-ear-large-tropical-leaves-outdoo.jpg",
     category: "plantas-exterior",
     description: "Alocasia de exterior con hojas gigantes, ideal para jardines tropicales.",
     options: [
@@ -421,7 +421,7 @@ const products: Product[] = [
     id: "32",
     name: "Olivo",
     price: 12500,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "/olive-tree-mediterranean-silver-green-leaves-outdo.jpg",
     category: "plantas-exterior",
     description: "Árbol mediterráneo clásico, resistente y de gran valor ornamental.",
     options: [
@@ -434,7 +434,7 @@ const products: Product[] = [
     id: "33",
     name: "Alpinia",
     price: 5800,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "/alpinia-ginger-plant-red-flowers-tropical-outdoor-.jpg",
     category: "plantas-exterior",
     description: "Planta tropical de jengibre con flores rojas llamativas.",
     options: [
@@ -447,7 +447,7 @@ const products: Product[] = [
     id: "34",
     name: "Beschorneria Yuccoides",
     price: 8200,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "/beschorneria-yuccoides-mexican-succulent-red-flowe.jpg",
     category: "plantas-exterior",
     description: "Suculenta mexicana con espectaculares flores rojas en verano.",
     options: [
@@ -460,7 +460,7 @@ const products: Product[] = [
     id: "35",
     name: "Buxus Sempervirens",
     price: 4500,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "/buxus-sempervirens-boxwood-evergreen-shrub-small-l.jpg",
     category: "plantas-exterior",
     description: "Arbusto perenne ideal para setos y topiarios, muy resistente.",
     options: [
@@ -473,7 +473,7 @@ const products: Product[] = [
     id: "36",
     name: "Pittosporum Tobira",
     price: 5200,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "/pittosporum-tobira-white-fragrant-flowers-green-le.jpg",
     category: "plantas-exterior",
     description: "Arbusto aromático con flores blancas fragantes, muy ornamental.",
     options: [
@@ -486,7 +486,7 @@ const products: Product[] = [
     id: "37",
     name: "Farfugium Japonicum",
     price: 4800,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "/farfugium-japonicum-round-leaves-yellow-flowers-sh.jpg",
     category: "plantas-exterior",
     description: "Planta de sombra con hojas redondeadas y flores amarillas brillantes.",
     options: [
@@ -499,7 +499,7 @@ const products: Product[] = [
     id: "38",
     name: "Laurel de Jardín",
     price: 3800,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "/bay-laurel-tree-aromatic-leaves-mediterranean-outd.jpg",
     category: "plantas-exterior",
     description: "Árbol aromático clásico, perfecto para jardines mediterráneos y cocina.",
     options: [
