@@ -9,24 +9,39 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ShoppingCart, ArrowLeft } from "lucide-react"
+import { ShoppingCart, ArrowLeft, MessageCircle, Droplets, Sun, Thermometer, Lightbulb } from "lucide-react"
 import { useCart, type Product, type ProductOption } from "@/contexts/cart-context"
 import Image from "next/image"
 
-const products: Product[] = [
+interface ExtendedProduct extends Product {
+  care?: {
+    water: string
+    light: string
+    temperature: string
+    tips: string
+  }
+  consultPrice?: boolean
+}
+
+const products: ExtendedProduct[] = [
   {
     id: "1",
     name: "Monstera Deliciosa",
     price: 3500,
     image: "/monstera-deliciosa-pot.png",
     category: "plantas-interior",
-    description:
-      "Planta de interior perfecta para espacios con luz indirecta. La Monstera Deliciosa es conocida por sus hojas grandes y perforadas que le dan un aspecto tropical único.",
+    description: "Planta de interior perfecta para espacios con luz indirecta",
     options: [
       { name: "Pequeña (15cm)", price: 3500 },
       { name: "Mediana (25cm)", price: 4800 },
       { name: "Grande (35cm)", price: 6200 },
     ],
+    care: {
+      water: "Regar cuando la tierra esté seca al tacto, aproximadamente 1 vez por semana",
+      light: "Luz indirecta brillante, evitar sol directo",
+      temperature: "18-27°C, proteger de corrientes de aire frío",
+      tips: "Limpiar las hojas regularmente para mantener su brillo. Puede trepar con soporte.",
+    },
   },
   {
     id: "2",
@@ -40,6 +55,12 @@ const products: Product[] = [
       { name: "Mediana (30cm)", price: 5800 },
       { name: "Grande (45cm)", price: 7500 },
     ],
+    care: {
+      water: "Regar cuando la tierra esté seca al tacto, aproximadamente 1 vez por semana",
+      light: "Luz indirecta brillante, evitar sol directo",
+      temperature: "18-27°C, proteger de corrientes de aire frío",
+      tips: "Limpiar las hojas regularmente para mantener su brillo. Puede trepar con soporte.",
+    },
   },
   {
     id: "3",
@@ -92,6 +113,12 @@ const products: Product[] = [
       { name: "Mediana (25cm)", price: 3200 },
       { name: "Grande (35cm)", price: 4500 },
     ],
+    care: {
+      water: "Regar cuando la tierra esté seca al tacto, aproximadamente 1 vez por semana",
+      light: "Luz indirecta brillante, evitar sol directo",
+      temperature: "18-27°C, proteger de corrientes de aire frío",
+      tips: "Limpiar las hojas regularmente para mantener su brillo. Puede trepar con soporte.",
+    },
   },
   {
     id: "7",
@@ -183,6 +210,12 @@ const products: Product[] = [
       { name: "Mediana (35cm)", price: 6800 },
       { name: "Grande (50cm)", price: 9200 },
     ],
+    care: {
+      water: "Regar cuando la tierra esté seca al tacto, aproximadamente 1 vez por semana",
+      light: "Luz indirecta brillante, evitar sol directo",
+      temperature: "18-27°C, proteger de corrientes de aire frío",
+      tips: "Limpiar las hojas regularmente para mantener su brillo. Puede trepar con soporte.",
+    },
   },
   {
     id: "14",
@@ -196,6 +229,12 @@ const products: Product[] = [
       { name: "Mediana (40cm)", price: 5500 },
       { name: "Grande (60cm)", price: 7800 },
     ],
+    care: {
+      water: "Regar cuando la tierra esté seca al tacto, aproximadamente 1 vez por semana",
+      light: "Luz indirecta brillante, evitar sol directo",
+      temperature: "18-27°C, proteger de corrientes de aire frío",
+      tips: "Limpiar las hojas regularmente para mantener su brillo. Puede trepar con soporte.",
+    },
   },
   {
     id: "15",
@@ -209,6 +248,12 @@ const products: Product[] = [
       { name: "Mediana (30cm)", price: 7200 },
       { name: "Grande (45cm)", price: 9800 },
     ],
+    care: {
+      water: "Regar cuando la tierra esté seca al tacto, aproximadamente 1 vez por semana",
+      light: "Luz indirecta brillante, evitar sol directo",
+      temperature: "18-27°C, proteger de corrientes de aire frío",
+      tips: "Limpiar las hojas regularmente para mantener su brillo. Puede trepar con soporte.",
+    },
   },
   {
     id: "16",
@@ -222,6 +267,12 @@ const products: Product[] = [
       { name: "Mediana (50cm)", price: 6500 },
       { name: "Grande (70cm)", price: 8900 },
     ],
+    care: {
+      water: "Regar cuando la tierra esté seca al tacto, aproximadamente 1 vez por semana",
+      light: "Luz indirecta brillante, evitar sol directo",
+      temperature: "18-27°C, proteger de corrientes de aire frío",
+      tips: "Limpiar las hojas regularmente para mantener su brillo. Puede trepar con soporte.",
+    },
   },
   {
     id: "17",
@@ -235,6 +286,12 @@ const products: Product[] = [
       { name: "Mediana (40cm)", price: 9200 },
       { name: "Grande (60cm)", price: 12500 },
     ],
+    care: {
+      water: "Regar cuando la tierra esté seca al tacto, aproximadamente 1 vez por semana",
+      light: "Luz indirecta brillante, evitar sol directo",
+      temperature: "18-27°C, proteger de corrientes de aire frío",
+      tips: "Limpiar las hojas regularmente para mantener su brillo. Puede trepar con soporte.",
+    },
   },
   {
     id: "18",
@@ -248,6 +305,12 @@ const products: Product[] = [
       { name: "Mediana (30cm)", price: 4500 },
       { name: "Grande (45cm)", price: 6200 },
     ],
+    care: {
+      water: "Regar cuando la tierra esté seca al tacto, aproximadamente 1 vez por semana",
+      light: "Luz indirecta brillante, evitar sol directo",
+      temperature: "18-27°C, proteger de corrientes de aire frío",
+      tips: "Limpiar las hojas regularmente para mantener su brillo. Puede trepar con soporte.",
+    },
   },
   {
     id: "19",
@@ -261,6 +324,12 @@ const products: Product[] = [
       { name: "Mediana (40cm)", price: 4200 },
       { name: "Grande (60cm)", price: 6500 },
     ],
+    care: {
+      water: "Regar cuando la tierra esté seca al tacto, aproximadamente 1 vez por semana",
+      light: "Luz indirecta brillante, evitar sol directo",
+      temperature: "18-27°C, proteger de corrientes de aire frío",
+      tips: "Limpiar las hojas regularmente para mantener su brillo. Puede trepar con soporte.",
+    },
   },
   {
     id: "20",
@@ -274,6 +343,12 @@ const products: Product[] = [
       { name: "Mediana (25cm)", price: 4800 },
       { name: "Grande (35cm)", price: 6500 },
     ],
+    care: {
+      water: "Regar cuando la tierra esté seca al tacto, aproximadamente 1 vez por semana",
+      light: "Luz indirecta brillante, evitar sol directo",
+      temperature: "18-27°C, proteger de corrientes de aire frío",
+      tips: "Limpiar las hojas regularmente para mantener su brillo. Puede trepar con soporte.",
+    },
   },
   {
     id: "21",
@@ -287,6 +362,12 @@ const products: Product[] = [
       { name: "Mediana (50cm)", price: 6800 },
       { name: "Grande (80cm)", price: 9500 },
     ],
+    care: {
+      water: "Regar cuando la tierra esté seca al tacto, aproximadamente 1 vez por semana",
+      light: "Luz indirecta brillante, evitar sol directo",
+      temperature: "18-27°C, proteger de corrientes de aire frío",
+      tips: "Limpiar las hojas regularmente para mantener su brillo. Puede trepar con soporte.",
+    },
   },
   {
     id: "22",
@@ -300,6 +381,12 @@ const products: Product[] = [
       { name: "Mediana (30cm)", price: 5200 },
       { name: "Grande (40cm)", price: 7200 },
     ],
+    care: {
+      water: "Regar cuando la tierra esté seca al tacto, aproximadamente 1 vez por semana",
+      light: "Luz indirecta brillante, evitar sol directo",
+      temperature: "18-27°C, proteger de corrientes de aire frío",
+      tips: "Limpiar las hojas regularmente para mantener su brillo. Puede trepar con soporte.",
+    },
   },
   {
     id: "23",
@@ -313,6 +400,12 @@ const products: Product[] = [
       { name: "Mediana (40cm)", price: 7800 },
       { name: "Grande (60cm)", price: 10500 },
     ],
+    care: {
+      water: "Regar cuando la tierra esté seca al tacto, aproximadamente 1 vez por semana",
+      light: "Luz indirecta brillante, evitar sol directo",
+      temperature: "18-27°C, proteger de corrientes de aire frío",
+      tips: "Limpiar las hojas regularmente para mantener su brillo. Puede trepar con soporte.",
+    },
   },
   {
     id: "24",
@@ -326,6 +419,12 @@ const products: Product[] = [
       { name: "Mediana (25cm)", price: 4200 },
       { name: "Grande (35cm)", price: 5800 },
     ],
+    care: {
+      water: "Regar cuando la tierra esté seca al tacto, aproximadamente 1 vez por semana",
+      light: "Luz indirecta brillante, evitar sol directo",
+      temperature: "18-27°C, proteger de corrientes de aire frío",
+      tips: "Limpiar las hojas regularmente para mantener su brillo. Puede trepar con soporte.",
+    },
   },
   {
     id: "25",
@@ -339,6 +438,12 @@ const products: Product[] = [
       { name: "Mediana (30cm)", price: 5800 },
       { name: "Grande (40cm)", price: 7800 },
     ],
+    care: {
+      water: "Regar cuando la tierra esté seca al tacto, aproximadamente 1 vez por semana",
+      light: "Luz indirecta brillante, evitar sol directo",
+      temperature: "18-27°C, proteger de corrientes de aire frío",
+      tips: "Limpiar las hojas regularmente para mantener su brillo. Puede trepar con soporte.",
+    },
   },
   {
     id: "26",
@@ -352,6 +457,12 @@ const products: Product[] = [
       { name: "Mediana (28cm)", price: 5200 },
       { name: "Grande (38cm)", price: 7200 },
     ],
+    care: {
+      water: "Regar cuando la tierra esté seca al tacto, aproximadamente 1 vez por semana",
+      light: "Luz indirecta brillante, evitar sol directo",
+      temperature: "18-27°C, proteger de corrientes de aire frío",
+      tips: "Limpiar las hojas regularmente para mantener su brillo. Puede trepar con soporte.",
+    },
   },
   {
     id: "27",
@@ -365,6 +476,12 @@ const products: Product[] = [
       { name: "Mediana (20cm)", price: 3200 },
       { name: "Grande (30cm)", price: 4500 },
     ],
+    care: {
+      water: "Regar cuando la tierra esté seca al tacto, aproximadamente 1 vez por semana",
+      light: "Luz indirecta brillante, evitar sol directo",
+      temperature: "18-27°C, proteger de corrientes de aire frío",
+      tips: "Limpiar las hojas regularmente para mantener su brillo. Puede trepar con soporte.",
+    },
   },
   {
     id: "28",
@@ -378,6 +495,12 @@ const products: Product[] = [
       { name: "Mediana (25cm)", price: 4500 },
       { name: "Grande (35cm)", price: 6200 },
     ],
+    care: {
+      water: "Regar cuando la tierra esté seca al tacto, aproximadamente 1 vez por semana",
+      light: "Luz indirecta brillante, evitar sol directo",
+      temperature: "18-27°C, proteger de corrientes de aire frío",
+      tips: "Limpiar las hojas regularmente para mantener su brillo. Puede trepar con soporte.",
+    },
   },
   {
     id: "29",
@@ -509,6 +632,212 @@ const products: Product[] = [
       { name: "Grande (100cm)", price: 9800 },
     ],
   },
+  {
+    id: "39",
+    name: "Maceta Cemento Redonda",
+    price: 0,
+    image: "/round-concrete-cement-pot-planter-gray-modern-mini.jpg",
+    category: "macetas-cemento",
+    description: "Maceta de cemento redonda con acabado liso, ideal para interiores y exteriores.",
+    consultPrice: true,
+    options: [
+      { name: "Chica (15cm)", price: 0 },
+      { name: "Mediana (20cm)", price: 0 },
+      { name: "Grande (30cm)", price: 0 },
+    ],
+  },
+  {
+    id: "40",
+    name: "Maceta Cemento Cuadrada",
+    price: 0,
+    image: "/square-concrete-cement-pot-planter-gray-modern-geo.jpg",
+    category: "macetas-cemento",
+    description: "Maceta de cemento cuadrada con diseño geométrico moderno.",
+    consultPrice: true,
+    options: [
+      { name: "Chica (15cm)", price: 0 },
+      { name: "Mediana (20cm)", price: 0 },
+      { name: "Grande (30cm)", price: 0 },
+    ],
+  },
+  {
+    id: "41",
+    name: "Maceta Cemento Cilíndrica",
+    price: 0,
+    image: "/cylindrical-concrete-cement-pot-planter-tall-gray-.jpg",
+    category: "macetas-cemento",
+    description: "Maceta de cemento cilíndrica alta, perfecta para plantas grandes.",
+    consultPrice: true,
+    options: [
+      { name: "Chica (20cm)", price: 0 },
+      { name: "Mediana (30cm)", price: 0 },
+      { name: "Grande (40cm)", price: 0 },
+    ],
+  },
+  {
+    id: "42",
+    name: "Maceta Cemento Texturizada",
+    price: 0,
+    image: "/textured-concrete-cement-pot-planter-rough-surface.jpg",
+    category: "macetas-cemento",
+    description: "Maceta de cemento con textura rugosa, estilo industrial moderno.",
+    consultPrice: true,
+    options: [
+      { name: "Chica (15cm)", price: 0 },
+      { name: "Mediana (20cm)", price: 0 },
+      { name: "Grande (30cm)", price: 0 },
+    ],
+  },
+  {
+    id: "43",
+    name: "Maceta Cemento Cónica",
+    price: 0,
+    image: "/conical-concrete-cement-pot-planter-tapered-gray-m.jpg",
+    category: "macetas-cemento",
+    description: "Maceta de cemento cónica con diseño elegante y contemporáneo.",
+    consultPrice: true,
+    options: [
+      { name: "Chica (18cm)", price: 0 },
+      { name: "Mediana (25cm)", price: 0 },
+      { name: "Grande (35cm)", price: 0 },
+    ],
+  },
+  {
+    id: "44",
+    name: "Maceta Cemento Bowl",
+    price: 0,
+    image: "/bowl-concrete-cement-pot-planter-wide-shallow-gray.jpg",
+    category: "macetas-cemento",
+    description: "Maceta de cemento tipo bowl, ideal para suculentas y cactus.",
+    consultPrice: true,
+    options: [
+      { name: "Chica (20cm)", price: 0 },
+      { name: "Mediana (30cm)", price: 0 },
+      { name: "Grande (40cm)", price: 0 },
+    ],
+  },
+  {
+    id: "45",
+    name: "Maceta Plástico Negro",
+    price: 800,
+    image: "/black-plastic-pot-planter-lightweight-modern.jpg",
+    category: "macetas-livianas",
+    description: "Maceta de plástico negro ligera, ideal para todo tipo de plantas.",
+    options: [
+      { name: "Chica (10cm)", price: 800 },
+      { name: "Mediana (15cm)", price: 1200 },
+      { name: "Grande (20cm)", price: 1800 },
+    ],
+  },
+  {
+    id: "46",
+    name: "Maceta Resina Blanca",
+    price: 1500,
+    image: "/white-resin-pot-planter-lightweight-modern-clean.jpg",
+    category: "macetas-livianas",
+    description: "Maceta de resina blanca con acabado mate, muy liviana y resistente.",
+    options: [
+      { name: "Chica (12cm)", price: 1500 },
+      { name: "Mediana (18cm)", price: 2200 },
+      { name: "Grande (25cm)", price: 3000 },
+    ],
+  },
+  {
+    id: "47",
+    name: "Maceta Plástico Colores",
+    price: 900,
+    image: "/colorful-plastic-pot-planter-bright-modern-fun.jpg",
+    category: "macetas-livianas",
+    description: "Maceta de plástico en colores vibrantes, perfecta para alegrar espacios.",
+    options: [
+      { name: "Chica (10cm)", price: 900 },
+      { name: "Mediana (15cm)", price: 1400 },
+      { name: "Grande (20cm)", price: 2000 },
+    ],
+  },
+  {
+    id: "48",
+    name: "Maceta Resina Gris",
+    price: 1600,
+    image: "/gray-resin-pot-planter-lightweight-modern-neutral.jpg",
+    category: "macetas-livianas",
+    description: "Maceta de resina gris con diseño minimalista y moderno.",
+    options: [
+      { name: "Chica (12cm)", price: 1600 },
+      { name: "Mediana (18cm)", price: 2400 },
+      { name: "Grande (25cm)", price: 3200 },
+    ],
+  },
+  {
+    id: "49",
+    name: "Pack Pothos + Maceta Cerámica",
+    price: 3800,
+    image: "/pothos-plant-in-white-ceramic-pot-combo-pack.jpg",
+    category: "plantas-con-macetas",
+    description: "Pothos dorado en maceta de cerámica blanca, listo para decorar.",
+    options: [
+      { name: "Pack Pequeño", price: 3800 },
+      { name: "Pack Mediano", price: 5200 },
+      { name: "Pack Grande", price: 6800 },
+    ],
+  },
+  {
+    id: "50",
+    name: "Pack Sansiveria + Maceta Cemento",
+    price: 4500,
+    image: "/sansevieria-snake-plant-in-concrete-pot-combo-pack.jpg",
+    category: "plantas-con-macetas",
+    description: "Sansiveria en maceta de cemento, combinación perfecta de estilo y resistencia.",
+    consultPrice: true,
+  },
+  {
+    id: "51",
+    name: "Pack Monstera + Maceta Terracota",
+    price: 4800,
+    image: "/monstera-deliciosa-in-terracotta-pot-combo-pack.jpg",
+    category: "plantas-con-macetas",
+    description: "Monstera deliciosa en maceta de terracota, estilo clásico y elegante.",
+    options: [
+      { name: "Pack Pequeño", price: 4800 },
+      { name: "Pack Mediano", price: 6500 },
+      { name: "Pack Grande", price: 8500 },
+    ],
+  },
+  {
+    id: "52",
+    name: "Pack Spatiphyllum + Maceta Blanca",
+    price: 4200,
+    image: "/peace-lily-spathiphyllum-in-white-pot-combo-pack.jpg",
+    category: "plantas-con-macetas",
+    description: "Spatiphyllum en maceta blanca, purifica el aire con estilo.",
+    options: [
+      { name: "Pack Pequeño", price: 4200 },
+      { name: "Pack Mediano", price: 5800 },
+      { name: "Pack Grande", price: 7500 },
+    ],
+  },
+  {
+    id: "53",
+    name: "Pack Suculentas + Maceta Cemento",
+    price: 2800,
+    image: "/succulent-plants-in-concrete-bowl-pot-combo-pack.jpg",
+    category: "plantas-con-macetas",
+    description: "Variedad de suculentas en maceta de cemento tipo bowl.",
+    consultPrice: true,
+  },
+  {
+    id: "54",
+    name: "Pack Ficus + Maceta Resina",
+    price: 5500,
+    image: "/ficus-lyrata-fiddle-leaf-fig-plant-in-modern-white.jpg",
+    category: "plantas-con-macetas",
+    description: "Ficus lyrata en maceta de resina moderna, elegancia garantizada.",
+    options: [
+      { name: "Pack Pequeño", price: 5500 },
+      { name: "Pack Mediano", price: 7800 },
+      { name: "Pack Grande", price: 10200 },
+    ],
+  },
 ]
 
 export default function ProductDetailPage() {
@@ -556,6 +885,40 @@ export default function ProductDetailPage() {
     addToCart(product, selectedOption || undefined)
   }
 
+  const handleConsultPrice = () => {
+    const sizeInfo = selectedOption ? ` - Tamaño: ${selectedOption.name}` : ""
+    const message = `Hola! Me interesa consultar el precio de: ${product.name}${sizeInfo}. Podrian darme mas informacion?`
+    const whatsappUrl = `https://wa.me/5491135617412?text=${encodeURIComponent(message)}`
+    window.open(whatsappUrl, "_blank")
+  }
+
+  const shouldShowSizeSelector =
+    (product.category === "plantas-interior" ||
+      product.category === "plantas-exterior" ||
+      product.category === "macetas-livianas" ||
+      product.category === "macetas-cemento") &&
+    product.options &&
+    product.options.length > 0
+
+  const getCategoryLabel = () => {
+    switch (product.category) {
+      case "plantas-interior":
+        return "Plantas de Interior"
+      case "plantas-exterior":
+        return "Plantas de Exterior"
+      case "macetas-cemento":
+        return "Macetas de Cemento"
+      case "macetas-livianas":
+        return "Macetas Livianas"
+      case "plantas-con-macetas":
+        return "Plantas con Macetas"
+      case "tierras":
+        return "Tierras y Sustratos"
+      default:
+        return "Producto"
+    }
+  }
+
   return (
     <div className="min-h-screen">
       <Header />
@@ -564,18 +927,18 @@ export default function ProductDetailPage() {
         className="container mx-auto px-4 py-8"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.4 }}
       >
         <motion.div
           className="mb-6"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.4 }}
         >
           <Button
             variant="ghost"
             onClick={() => router.push("/tienda")}
-            className="flex items-center gap-2 text-primary hover:text-primary-dark"
+            className="flex items-center gap-2 text-primary hover:text-primary/80"
           >
             <ArrowLeft className="h-4 w-4" />
             Volver a la tienda
@@ -583,10 +946,11 @@ export default function ProductDetailPage() {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Product Image */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
           >
             <Card className="overflow-hidden">
               <div className="aspect-square relative">
@@ -594,44 +958,41 @@ export default function ProductDetailPage() {
                   src={product.image || "/placeholder.svg"}
                   alt={product.name}
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover"
                   priority
+                  unoptimized
                 />
               </div>
             </Card>
           </motion.div>
 
+          {/* Product Info */}
           <motion.div
             className="space-y-6"
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
           >
             <div>
               <Badge variant="secondary" className="mb-3">
-                {product.category === "plantas-interior"
-                  ? "Plantas de Interior"
-                  : product.category === "plantas-exterior"
-                    ? "Plantas de Exterior"
-                    : product.category === "macetas"
-                      ? "Macetas"
-                      : "Tierras y Sustratos"}
+                {getCategoryLabel()}
               </Badge>
-              <h1 className="text-3xl md:text-4xl font-bold text-primary mb-4 font-serif">{product.name}</h1>
+              <h1 className="text-3xl md:text-4xl font-bold text-primary mb-4 font-sans">{product.name}</h1>
               <p className="text-lg text-muted-foreground leading-relaxed">{product.description}</p>
             </div>
 
-            {product.options && product.options.length > 0 && (
+            {shouldShowSizeSelector && (
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold">Elegir una opción:</h3>
+                <h3 className="text-lg font-semibold">Tamaños disponibles:</h3>
                 <Select value={selectedOption?.name || ""} onValueChange={handleOptionChange}>
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Selecciona una opción" />
+                    <SelectValue placeholder="Selecciona un tamaño" />
                   </SelectTrigger>
                   <SelectContent>
                     {product.options.map((option) => (
                       <SelectItem key={option.name} value={option.name}>
-                        {option.name} - ${option.price.toLocaleString()}
+                        {product.consultPrice ? option.name : `${option.name} - $${option.price.toLocaleString()}`}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -639,24 +1000,82 @@ export default function ProductDetailPage() {
               </div>
             )}
 
+            {/* Price Display */}
             <div className="space-y-2">
-              <div className="text-3xl font-bold text-primary">${currentPrice.toLocaleString()}</div>
-              {selectedOption && (
-                <p className="text-sm text-muted-foreground">Opción seleccionada: {selectedOption.name}</p>
+              {product.consultPrice ? (
+                <div className="text-3xl font-bold text-primary">Consultar precio</div>
+              ) : (
+                <>
+                  <div className="text-3xl font-bold text-primary">${currentPrice.toLocaleString()}</div>
+                  {selectedOption && shouldShowSizeSelector && (
+                    <p className="text-sm text-muted-foreground">Tamaño seleccionado: {selectedOption.name}</p>
+                  )}
+                </>
               )}
             </div>
 
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Button
-                size="lg"
-                onClick={handleAddToCart}
-                className="w-full flex items-center gap-2 text-lg py-6"
-                disabled={product.options && product.options.length > 0 && !selectedOption}
-              >
-                <ShoppingCart className="h-5 w-5" />
-                Agregar al carrito
-              </Button>
+              {product.consultPrice ? (
+                <Button
+                  size="lg"
+                  onClick={handleConsultPrice}
+                  className="w-full flex items-center gap-2 text-lg py-6 bg-green-600 hover:bg-green-700"
+                  disabled={shouldShowSizeSelector && !selectedOption}
+                >
+                  <MessageCircle className="h-5 w-5" />
+                  Consultar precio por WhatsApp
+                </Button>
+              ) : (
+                <Button
+                  size="lg"
+                  onClick={handleAddToCart}
+                  className="w-full flex items-center gap-2 text-lg py-6"
+                  disabled={shouldShowSizeSelector && !selectedOption}
+                >
+                  <ShoppingCart className="h-5 w-5" />
+                  Agregar al carrito
+                </Button>
+              )}
             </motion.div>
+
+            {product.care && (
+              <Card className="p-6 bg-muted/50">
+                <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                  <Lightbulb className="h-5 w-5 text-primary" />
+                  Cuidados de la planta
+                </h3>
+                <div className="space-y-4">
+                  <div className="flex gap-3">
+                    <Droplets className="h-5 w-5 text-blue-500 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="font-semibold text-sm">Riego</p>
+                      <p className="text-sm text-muted-foreground">{product.care.water}</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <Sun className="h-5 w-5 text-yellow-500 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="font-semibold text-sm">Luz</p>
+                      <p className="text-sm text-muted-foreground">{product.care.light}</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <Thermometer className="h-5 w-5 text-red-500 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="font-semibold text-sm">Temperatura</p>
+                      <p className="text-sm text-muted-foreground">{product.care.temperature}</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <Lightbulb className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="font-semibold text-sm">Consejos</p>
+                      <p className="text-sm text-muted-foreground">{product.care.tips}</p>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            )}
           </motion.div>
         </div>
       </motion.div>

@@ -9,46 +9,46 @@ import Link from "next/link"
 import { Leaf, Users, Award, Heart, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
 import { useState, useEffect } from "react"
 
+const heroImages = [
+  {
+    url: "/lush-green-garden-with-beautiful-plants-and-flower.png",
+    title: "Transforma tu espacio con Flora",
+    subtitle: "Descubrí nuestra pasión por las plantas y el diseño natural.",
+    cta: "Plantas de interior",
+    link: "/tienda?categoria=plantas-interior",
+  },
+  {
+    url: "/beautiful-indoor-plants-in-decorative-pots.png",
+    title: "Plantas que dan vida a tu hogar.",
+    subtitle: "Encuentra la planta perfecta para cada rincón de tu casa con nuestro asesoramiento personalizado.",
+    cta: "Ver plantas",
+    link: "/tienda?categoria=plantas",
+  },
+  {
+    url: "/decorative-plant-pots-and-containers.png",
+    title: "Diseño y funcionalidad.",
+    subtitle: "Macetas y accesorios únicos que complementan perfectamente tus plantas favoritas.",
+    cta: "Ver macetas",
+    link: "/tienda?categoria=macetas",
+  },
+  {
+    url: "/garden-soil-and-plant-substrates.png",
+    title: "Todo lo que tus plantas necesitan.",
+    subtitle: "Sustratos premium y productos especializados para el crecimiento saludable de tus plantas.",
+    cta: "Sustratos",
+    link: "/tienda?categoria=tierras",
+  },
+]
+
 export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0)
-
-  const heroImages = [
-    {
-      url: "/lush-green-garden-with-beautiful-plants-and-flower.png",
-      title: "Transforma tu espacio con Flora",
-      subtitle: "Descubrí nuestra pasión por las plantas y el diseño natural.",
-      cta: "Plantas de interior",
-      link: "/tienda?categoria=plantas-interior",
-    },
-    {
-      url: "/beautiful-indoor-plants-in-decorative-pots.png",
-      title: "Plantas que dan vida a tu hogar.",
-      subtitle: "Encuentra la planta perfecta para cada rincón de tu casa con nuestro asesoramiento personalizado.",
-      cta: "Ver plantas",
-      link: "/tienda?categoria=plantas",
-    },
-    {
-      url: "/decorative-plant-pots-and-containers.png",
-      title: "Diseño y funcionalidad.",
-      subtitle: "Macetas y accesorios únicos que complementan perfectamente tus plantas favoritas.",
-      cta: "Ver macetas",
-      link: "/tienda?categoria=macetas",
-    },
-    {
-      url: "/garden-soil-and-plant-substrates.png",
-      title: "Todo lo que tus plantas necesitan.",
-      subtitle: "Sustratos premium y productos especializados para el crecimiento saludable de tus plantas.",
-      cta: "Ver productos",
-      link: "/tienda",
-    },
-  ]
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroImages.length)
     }, 8000)
     return () => clearInterval(timer)
-  }, [heroImages.length])
+  }, []) // Removed heroImages.length dependency
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % heroImages.length)
@@ -63,17 +63,20 @@ export default function HomePage() {
       <Header />
 
       {/* Hero Section with Image Carousel */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0" style={{ willChange: "transform" }}>
+      <motion.section
+        className="relative h-screen flex items-center justify-center overflow-hidden"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        <div className="absolute inset-0">
           {heroImages.map((image, index) => (
             <div
               key={index}
-              className={`absolute inset-0 bg-cover bg-center transition-opacity duration-700 ${
-                index === currentSlide ? "opacity-100" : "opacity-0"
-              }`}
+              className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000"
               style={{
                 backgroundImage: `url('${image.url}')`,
-                transform: "translate3d(0, 0, 0)", // Force hardware acceleration
+                opacity: index === currentSlide ? 1 : 0,
               }}
             />
           ))}
@@ -97,16 +100,10 @@ export default function HomePage() {
         </button>
 
         <div className="relative z-10 text-left max-w-2xl mx-auto px-8 ml-16">
-          <h1
-            className="text-5xl md:text-7xl font-serif text-white mb-6 text-balance drop-shadow-lg leading-tight transition-opacity duration-500"
-            key={currentSlide}
-          >
+          <h1 className="text-5xl md:text-7xl font-serif text-white mb-6 text-balance drop-shadow-lg leading-tight">
             {heroImages[currentSlide].title}
           </h1>
-          <p
-            className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto text-pretty drop-shadow-md transition-opacity duration-500"
-            key={`subtitle-${currentSlide}`}
-          >
+          <p className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto text-pretty drop-shadow-md">
             {heroImages[currentSlide].subtitle}
           </p>
           <div className="mb-8">
@@ -126,14 +123,14 @@ export default function HomePage() {
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
-              className={`w-4 h-4 rounded-full transition-all duration-200 ${
+              className={`w-4 h-4 rounded-full transition-all duration-200 hover:scale-110 ${
                 index === currentSlide ? "bg-white" : "bg-white/50"
               }`}
               aria-label={`Ir a imagen ${index + 1}`}
             />
           ))}
         </div>
-      </section>
+      </motion.section>
 
       {/* About Section */}
       <section className="py-16 bg-background">
@@ -195,7 +192,7 @@ export default function HomePage() {
       </section>
 
       {/* Featured Products */}
-      <section className="py-16 bg-muted">
+      <section id="sustratos" className="py-16 bg-muted">
         <div className="container mx-auto px-4">
           <motion.div
             className="text-center mb-12"

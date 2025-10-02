@@ -11,7 +11,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ShoppingCart, Search, MessageCircle } from "lucide-react"
+import { Search } from "lucide-react"
 import { useCart, type Product } from "@/contexts/cart-context"
 
 interface ExtendedProduct extends Product {
@@ -701,6 +701,11 @@ const products: ExtendedProduct[] = [
     category: "macetas-cemento",
     description: "Maceta de cemento redonda con acabado liso, ideal para interiores y exteriores.",
     consultPrice: true,
+    options: [
+      { name: "Chica (15cm)", price: 0 },
+      { name: "Mediana (20cm)", price: 0 },
+      { name: "Grande (30cm)", price: 0 },
+    ],
   },
   {
     id: "40",
@@ -710,6 +715,11 @@ const products: ExtendedProduct[] = [
     category: "macetas-cemento",
     description: "Maceta de cemento cuadrada con diseño geométrico moderno.",
     consultPrice: true,
+    options: [
+      { name: "Chica (15cm)", price: 0 },
+      { name: "Mediana (20cm)", price: 0 },
+      { name: "Grande (30cm)", price: 0 },
+    ],
   },
   {
     id: "41",
@@ -719,6 +729,11 @@ const products: ExtendedProduct[] = [
     category: "macetas-cemento",
     description: "Maceta de cemento cilíndrica alta, perfecta para plantas grandes.",
     consultPrice: true,
+    options: [
+      { name: "Chica (20cm)", price: 0 },
+      { name: "Mediana (30cm)", price: 0 },
+      { name: "Grande (40cm)", price: 0 },
+    ],
   },
   {
     id: "42",
@@ -728,6 +743,11 @@ const products: ExtendedProduct[] = [
     category: "macetas-cemento",
     description: "Maceta de cemento con textura rugosa, estilo industrial moderno.",
     consultPrice: true,
+    options: [
+      { name: "Chica (15cm)", price: 0 },
+      { name: "Mediana (20cm)", price: 0 },
+      { name: "Grande (30cm)", price: 0 },
+    ],
   },
   {
     id: "43",
@@ -737,6 +757,11 @@ const products: ExtendedProduct[] = [
     category: "macetas-cemento",
     description: "Maceta de cemento cónica con diseño elegante y contemporáneo.",
     consultPrice: true,
+    options: [
+      { name: "Chica (18cm)", price: 0 },
+      { name: "Mediana (25cm)", price: 0 },
+      { name: "Grande (35cm)", price: 0 },
+    ],
   },
   {
     id: "44",
@@ -746,6 +771,11 @@ const products: ExtendedProduct[] = [
     category: "macetas-cemento",
     description: "Maceta de cemento tipo bowl, ideal para suculentas y cactus.",
     consultPrice: true,
+    options: [
+      { name: "Chica (20cm)", price: 0 },
+      { name: "Mediana (30cm)", price: 0 },
+      { name: "Grande (40cm)", price: 0 },
+    ],
   },
   {
     id: "45",
@@ -860,7 +890,7 @@ const products: ExtendedProduct[] = [
     id: "54",
     name: "Pack Ficus + Maceta Resina",
     price: 5500,
-    image: "/placeholder.svg?height=300&width=300",
+    image: "/ficus-lyrata-fiddle-leaf-fig-plant-in-modern-white.jpg",
     category: "plantas-con-macetas",
     description: "Ficus lyrata en maceta de resina moderna, elegancia garantizada.",
     options: [
@@ -1060,26 +1090,14 @@ export default function TiendaPage() {
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                    {product.consultPrice ? (
-                      <Button
-                        variant="secondary"
-                        size="sm"
-                        onClick={() => handleConsultPrice(product.name)}
-                        className="bg-white text-black hover:bg-gray-100 shadow-lg flex items-center gap-2"
-                      >
-                        <MessageCircle className="h-4 w-4" />
-                        Consultar precio
-                      </Button>
-                    ) : (
-                      <Button
-                        variant="secondary"
-                        size="sm"
-                        onClick={() => router.push(`/producto/${product.id}`)}
-                        className="bg-white text-black hover:bg-gray-100 shadow-lg"
-                      >
-                        Ver más
-                      </Button>
-                    )}
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      onClick={() => router.push(`/producto/${product.id}`)}
+                      className="bg-white text-black hover:bg-gray-100 shadow-lg"
+                    >
+                      Ver más
+                    </Button>
                   </div>
                 </div>
                 <CardContent className="p-4">
@@ -1100,23 +1118,13 @@ export default function TiendaPage() {
                     ) : (
                       <span className="text-lg font-bold text-primary">${product.price.toLocaleString()}</span>
                     )}
-                    {product.consultPrice ? (
+                    {!product.consultPrice && (
                       <Button
                         size="sm"
-                        onClick={() => handleConsultPrice(product.name)}
-                        className="flex items-center gap-2 bg-green-600 hover:bg-green-700"
-                      >
-                        <MessageCircle className="h-4 w-4" />
-                        Consultar
-                      </Button>
-                    ) : (
-                      <Button
-                        size="sm"
-                        onClick={() => addToCart(product as Product)}
+                        onClick={() => router.push(`/producto/${product.id}`)}
                         className="flex items-center gap-2"
                       >
-                        <ShoppingCart className="h-4 w-4" />
-                        Agregar
+                        Ver más
                       </Button>
                     )}
                   </div>
