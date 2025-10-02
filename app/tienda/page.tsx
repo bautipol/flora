@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { useSearchParams } from "next/navigation"
+import { useSearchParams, useRouter } from "next/navigation"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
@@ -10,10 +10,19 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ShoppingCart, Search } from "lucide-react"
+import { ShoppingCart, Search } from 'lucide-react'
 import { useCart, type Product } from "@/contexts/cart-context"
 
-const products: Product[] = [
+interface ExtendedProduct extends Product {
+  care?: {
+    water: string
+    light: string
+    temperature: string
+    tips: string
+  }
+}
+
+const products: ExtendedProduct[] = [
   {
     id: "1",
     name: "Monstera Deliciosa",
@@ -26,6 +35,12 @@ const products: Product[] = [
       { name: "Mediana (25cm)", price: 4800 },
       { name: "Grande (35cm)", price: 6200 },
     ],
+    care: {
+      water: "Regar cuando la tierra esté seca al tacto, aproximadamente 1 vez por semana",
+      light: "Luz indirecta brillante, evitar sol directo",
+      temperature: "18-27°C, proteger de corrientes de aire frío",
+      tips: "Limpiar las hojas regularmente para mantener su brillo. Puede trepar con soporte.",
+    },
   },
   {
     id: "2",
@@ -39,6 +54,12 @@ const products: Product[] = [
       { name: "Mediana (30cm)", price: 5800 },
       { name: "Grande (45cm)", price: 7500 },
     ],
+    care: {
+      water: "Mantener el sustrato ligeramente húmedo, regar cada 7-10 días",
+      light: "Luz indirecta brillante, evitar sol directo",
+      temperature: "18-25°C, evitar cambios bruscos de temperatura",
+      tips: "Evitar moverla una vez encontrada su ubicación ideal. Las hojas grandes pueden acumular polvo.",
+    },
   },
   {
     id: "3",
@@ -91,6 +112,12 @@ const products: Product[] = [
       { name: "Mediana (25cm)", price: 3200 },
       { name: "Grande (35cm)", price: 4500 },
     ],
+    care: {
+      water: "Regar cuando la tierra esté seca al tacto, aproximadamente 1 vez por semana",
+      light: "Luz indirecta, tolera condiciones de poca luz",
+      temperature: "18-25°C, evitar corrientes de aire frío",
+      tips: "Crece muy rápido y es fácil de propagar por esquejes. Ideal para cestas colgantes.",
+    },
   },
   {
     id: "7",
@@ -182,6 +209,12 @@ const products: Product[] = [
       { name: "Mediana (35cm)", price: 6800 },
       { name: "Grande (50cm)", price: 9200 },
     ],
+    care: {
+      water: "Mantener el sustrato húmedo pero no encharcado, regar 2-3 veces por semana",
+      light: "Luz indirecta brillante, tolera algo de sombra",
+      temperature: "18-24°C, alta humedad ambiental",
+      tips: "Pulverizar las hojas regularmente. Excelente purificadora de aire.",
+    },
   },
   {
     id: "14",
@@ -195,6 +228,12 @@ const products: Product[] = [
       { name: "Mediana (40cm)", price: 5500 },
       { name: "Grande (60cm)", price: 7800 },
     ],
+    care: {
+      water: "Regar cuando los primeros 5cm de tierra estén secos, cada 7-10 días",
+      light: "Luz brillante indirecta, tolera algo de sol directo matutino",
+      temperature: "15-24°C, evitar cambios bruscos de temperatura",
+      tips: "Limpiar las hojas con paño húmedo para mantener su brillo característico.",
+    },
   },
   {
     id: "15",
@@ -208,6 +247,12 @@ const products: Product[] = [
       { name: "Mediana (30cm)", price: 7200 },
       { name: "Grande (45cm)", price: 9800 },
     ],
+    care: {
+      water: "Mantener sustrato ligeramente húmedo, regar 2 veces por semana",
+      light: "Sombra parcial a luz indirecta, evitar sol directo",
+      temperature: "16-24°C, tolera ambientes con poca luz",
+      tips: "Ideal para oficinas y baños. Crece lentamente y requiere poco mantenimiento.",
+    },
   },
   {
     id: "16",
@@ -221,6 +266,12 @@ const products: Product[] = [
       { name: "Mediana (50cm)", price: 6500 },
       { name: "Grande (70cm)", price: 8900 },
     ],
+    care: {
+      water: "Riego moderado cada 10-14 días, dejar secar entre riegos",
+      light: "Luz brillante directa o indirecta, muy tolerante",
+      temperature: "10-30°C, muy resistente a diferentes condiciones",
+      tips: "Planta muy resistente y de bajo mantenimiento. Perfecta para principiantes.",
+    },
   },
   {
     id: "17",
@@ -234,6 +285,12 @@ const products: Product[] = [
       { name: "Mediana (40cm)", price: 9200 },
       { name: "Grande (60cm)", price: 12500 },
     ],
+    care: {
+      water: "Regar regularmente manteniendo sustrato húmedo, 2-3 veces por semana",
+      light: "Luz indirecta media a brillante, tolera sombra",
+      temperature: "16-24°C, prefiere ambientes frescos",
+      tips: "Palmera muy elegante y resistente. Crece lentamente formando múltiples tallos.",
+    },
   },
   {
     id: "18",
@@ -247,6 +304,12 @@ const products: Product[] = [
       { name: "Mediana (30cm)", price: 4500 },
       { name: "Grande (45cm)", price: 6200 },
     ],
+    care: {
+      water: "Mantener sustrato húmedo, regar 2-3 veces por semana",
+      light: "Sombra parcial a luz indirecta, evitar sol directo",
+      temperature: "18-25°C, alta humedad ambiental",
+      tips: "Excelente purificadora de aire. Las hojas caídas indican necesidad de riego.",
+    },
   },
   {
     id: "19",
@@ -260,6 +323,12 @@ const products: Product[] = [
       { name: "Mediana (40cm)", price: 4200 },
       { name: "Grande (60cm)", price: 6500 },
     ],
+    care: {
+      water: "Riego escaso cada 2-3 semanas, dejar secar completamente entre riegos",
+      light: "Tolera desde sombra hasta luz brillante indirecta",
+      temperature: "15-30°C, muy resistente",
+      tips: "Una de las plantas más resistentes. Ideal para principiantes y espacios con poca luz.",
+    },
   },
   {
     id: "20",
@@ -273,6 +342,12 @@ const products: Product[] = [
       { name: "Mediana (25cm)", price: 4800 },
       { name: "Grande (35cm)", price: 6500 },
     ],
+    care: {
+      water: "Regar cuando la capa superior de tierra esté seca, cada 5-7 días",
+      light: "Luz indirecta media a brillante",
+      temperature: "18-27°C, evitar corrientes de aire",
+      tips: "Puede trepar o colgar. Podar para mantener forma deseada.",
+    },
   },
   {
     id: "21",
@@ -286,6 +361,12 @@ const products: Product[] = [
       { name: "Mediana (50cm)", price: 6800 },
       { name: "Grande (80cm)", price: 9500 },
     ],
+    care: {
+      water: "Riego moderado cada 7-10 días, evitar encharcamiento",
+      light: "Luz indirecta brillante, tolera algo de sombra",
+      temperature: "18-24°C, evitar temperaturas extremas",
+      tips: "Planta arquitectónica ideal para espacios modernos. Crece verticalmente.",
+    },
   },
   {
     id: "22",
@@ -299,6 +380,12 @@ const products: Product[] = [
       { name: "Mediana (30cm)", price: 5200 },
       { name: "Grande (40cm)", price: 7200 },
     ],
+    care: {
+      water: "Mantener sustrato ligeramente húmedo, regar 1-2 veces por semana",
+      light: "Luz indirecta media, tolera poca luz",
+      temperature: "18-24°C, evitar corrientes de aire frío",
+      tips: "Hojas coloridas que no requieren mucha luz. Excelente para oficinas.",
+    },
   },
   {
     id: "23",
@@ -312,6 +399,12 @@ const products: Product[] = [
       { name: "Mediana (40cm)", price: 7800 },
       { name: "Grande (60cm)", price: 10500 },
     ],
+    care: {
+      water: "Mantener sustrato húmedo pero no encharcado, regar 2-3 veces por semana",
+      light: "Luz indirecta brillante, evitar sol directo",
+      temperature: "20-27°C, alta humedad ambiental",
+      tips: "Requiere alta humedad. Pulverizar hojas regularmente o usar humidificador.",
+    },
   },
   {
     id: "24",
@@ -325,6 +418,12 @@ const products: Product[] = [
       { name: "Mediana (25cm)", price: 4200 },
       { name: "Grande (35cm)", price: 5800 },
     ],
+    care: {
+      water: "Regar cuando la tierra superficial esté seca, cada 5-7 días",
+      light: "Luz indirecta media a brillante",
+      temperature: "18-24°C, evitar temperaturas bajas",
+      tips: "Puede trepar o colgar. Las hojas cambian de forma con la edad.",
+    },
   },
   {
     id: "25",
@@ -338,6 +437,12 @@ const products: Product[] = [
       { name: "Mediana (30cm)", price: 5800 },
       { name: "Grande (40cm)", price: 7800 },
     ],
+    care: {
+      water: "Mantener sustrato húmedo, regar 2-3 veces por semana con agua filtrada",
+      light: "Luz indirecta media, evitar sol directo",
+      temperature: "18-24°C, alta humedad (60-70%)",
+      tips: "Sensible al cloro del agua. Usar agua filtrada o reposada. Hojas se mueven con la luz.",
+    },
   },
   {
     id: "26",
@@ -351,6 +456,12 @@ const products: Product[] = [
       { name: "Mediana (28cm)", price: 5200 },
       { name: "Grande (38cm)", price: 7200 },
     ],
+    care: {
+      water: "Mantener sustrato húmedo durante floración, regar 2-3 veces por semana",
+      light: "Luz indirecta brillante",
+      temperature: "18-24°C, alta humedad",
+      tips: "Florece en primavera-verano. Requiere alta humedad para mantener hojas brillantes.",
+    },
   },
   {
     id: "27",
@@ -364,12 +475,18 @@ const products: Product[] = [
       { name: "Mediana (20cm)", price: 3200 },
       { name: "Grande (30cm)", price: 4500 },
     ],
+    care: {
+      water: "Regar regularmente manteniendo sustrato húmedo, 2 veces por semana",
+      light: "Luz indirecta brillante para mantener colores vivos",
+      temperature: "15-24°C, muy adaptable",
+      tips: "Podar regularmente para mantener forma compacta. Muy fácil de propagar.",
+    },
   },
   {
     id: "28",
     name: "Helecho Asplenium",
     price: 3200,
-    image: "/placeholder-pnt4e.png",
+    image: "/asplenium-fern-bright-green-fronds-indoor-housepla.jpg",
     category: "plantas-interior",
     description: "Helecho de interior con frondas brillantes, ideal para baños y cocinas.",
     options: [
@@ -377,12 +494,18 @@ const products: Product[] = [
       { name: "Mediana (25cm)", price: 4500 },
       { name: "Grande (35cm)", price: 6200 },
     ],
+    care: {
+      water: "Mantener sustrato constantemente húmedo, regar 3-4 veces por semana",
+      light: "Sombra parcial a luz indirecta, evitar sol directo",
+      temperature: "16-24°C, alta humedad ambiental",
+      tips: "Ideal para baños por su amor a la humedad. Pulverizar hojas regularmente.",
+    },
   },
   {
     id: "29",
     name: "Strelitzia Nicolai",
     price: 8500,
-    image: "/placeholder-g2cxg.png",
+    image: "/strelitzia-nicolai-giant-bird-of-paradise-large-le.jpg",
     category: "plantas-exterior",
     description: "Ave del paraíso gigante con hojas enormes, perfecta para jardines tropicales.",
     options: [
@@ -390,6 +513,12 @@ const products: Product[] = [
       { name: "Mediana (80cm)", price: 12500 },
       { name: "Grande (120cm)", price: 18500 },
     ],
+    care: {
+      water: "Riego abundante en verano 2-3 veces por semana, reducir en invierno",
+      light: "Sol directo o semisombra, muy tolerante",
+      temperature: "10-30°C, proteger de heladas",
+      tips: "Planta de gran tamaño que necesita espacio. Puede alcanzar varios metros de altura.",
+    },
   },
   {
     id: "30",
@@ -403,6 +532,12 @@ const products: Product[] = [
       { name: "Mediana (60cm)", price: 9800 },
       { name: "Grande (90cm)", price: 14500 },
     ],
+    care: {
+      water: "Riego regular en verano 2 veces por semana, espaciar en invierno",
+      light: "Sol directo o semisombra, florece mejor con sol",
+      temperature: "10-28°C, tolera heladas ligeras",
+      tips: "Florece mejor con sol directo. Las flores aparecen en plantas maduras (3-5 años).",
+    },
   },
   {
     id: "31",
@@ -416,6 +551,12 @@ const products: Product[] = [
       { name: "Mediana (60cm)", price: 10500 },
       { name: "Grande (90cm)", price: 15200 },
     ],
+    care: {
+      water: "Riego abundante en verano 3-4 veces por semana, mantener sustrato húmedo",
+      light: "Semisombra a sombra luminosa, evitar sol directo intenso",
+      temperature: "15-30°C, proteger de heladas",
+      tips: "Requiere alta humedad y protección del viento. Hojas pueden alcanzar gran tamaño.",
+    },
   },
   {
     id: "32",
@@ -429,6 +570,12 @@ const products: Product[] = [
       { name: "Mediano (100cm)", price: 18500 },
       { name: "Grande (150cm)", price: 28500 },
     ],
+    care: {
+      water: "Riego moderado cada 7-10 días, muy resistente a sequía",
+      light: "Sol directo, necesita mínimo 6 horas de sol",
+      temperature: "-10 a 40°C, muy resistente",
+      tips: "Árbol muy longevo y resistente. Podar en invierno para mantener forma.",
+    },
   },
   {
     id: "33",
@@ -442,6 +589,12 @@ const products: Product[] = [
       { name: "Mediana (70cm)", price: 8500 },
       { name: "Grande (100cm)", price: 12200 },
     ],
+    care: {
+      water: "Riego abundante en verano 3 veces por semana, mantener húmedo",
+      light: "Semisombra a sol filtrado",
+      temperature: "15-30°C, proteger de heladas",
+      tips: "Florece en verano. Requiere suelo rico en materia orgánica y buen drenaje.",
+    },
   },
   {
     id: "34",
@@ -455,6 +608,12 @@ const products: Product[] = [
       { name: "Mediana (50cm)", price: 11500 },
       { name: "Grande (80cm)", price: 16800 },
     ],
+    care: {
+      water: "Riego moderado cada 10-14 días, muy resistente a sequía",
+      light: "Sol directo a semisombra",
+      temperature: "-5 a 35°C, muy resistente",
+      tips: "Florece espectacularmente en verano con tallos rojos. Muy bajo mantenimiento.",
+    },
   },
   {
     id: "35",
@@ -468,6 +627,12 @@ const products: Product[] = [
       { name: "Mediano (40cm)", price: 6800 },
       { name: "Grande (60cm)", price: 9500 },
     ],
+    care: {
+      water: "Riego regular 2 veces por semana, evitar encharcamiento",
+      light: "Sol a semisombra, muy adaptable",
+      temperature: "-15 a 35°C, muy resistente",
+      tips: "Ideal para setos y topiarios. Podar 2-3 veces al año para mantener forma.",
+    },
   },
   {
     id: "36",
@@ -481,6 +646,12 @@ const products: Product[] = [
       { name: "Mediano (50cm)", price: 7500 },
       { name: "Grande (80cm)", price: 10800 },
     ],
+    care: {
+      water: "Riego moderado 2 veces por semana en verano",
+      light: "Sol a semisombra",
+      temperature: "-5 a 35°C, resistente",
+      tips: "Flores muy fragantes en primavera. Ideal para setos y pantallas verdes.",
+    },
   },
   {
     id: "37",
@@ -494,6 +665,12 @@ const products: Product[] = [
       { name: "Mediana (35cm)", price: 6800 },
       { name: "Grande (50cm)", price: 9200 },
     ],
+    care: {
+      water: "Riego regular 2-3 veces por semana, mantener húmedo",
+      light: "Sombra a semisombra, evitar sol directo",
+      temperature: "-5 a 25°C, prefiere climas frescos",
+      tips: "Ideal para zonas sombreadas del jardín. Florece en otoño con flores amarillas.",
+    },
   },
   {
     id: "38",
@@ -507,6 +684,12 @@ const products: Product[] = [
       { name: "Mediano (70cm)", price: 6200 },
       { name: "Grande (100cm)", price: 9800 },
     ],
+    care: {
+      water: "Riego moderado cada 7-10 días, resistente a sequía",
+      light: "Sol directo a semisombra",
+      temperature: "-10 a 35°C, muy resistente",
+      tips: "Hojas aromáticas usadas en cocina. Podar para mantener forma deseada.",
+    },
   },
 ]
 
@@ -522,6 +705,7 @@ const categories = [
 
 export default function TiendaPage() {
   const searchParams = useSearchParams()
+  const router = useRouter()
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("todos")
   const [sortBy, setSortBy] = useState("name")
@@ -676,7 +860,7 @@ export default function TiendaPage() {
                     <Button
                       variant="secondary"
                       size="sm"
-                      onClick={() => (window.location.href = `/producto/${product.id}`)}
+                      onClick={() => router.push(`/producto/${product.id}`)}
                       className="bg-white text-black hover:bg-gray-100 shadow-lg"
                     >
                       Ver más
@@ -696,7 +880,11 @@ export default function TiendaPage() {
                       desde ${Math.min(...product.options!.map((option) => option.price)).toLocaleString()}
                     </span>
                     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                      <Button size="sm" onClick={() => addToCart(product)} className="flex items-center gap-2">
+                      <Button
+                        size="sm"
+                        onClick={() => addToCart(product as Product)}
+                        className="flex items-center gap-2"
+                      >
                         <ShoppingCart className="h-4 w-4" />
                         Agregar
                       </Button>

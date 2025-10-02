@@ -281,7 +281,7 @@ export default function ContactoPage() {
                       whileHover={{ scale: 1.02 }}
                     >
                       <img
-                        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-HdnJvHycDdjN3Z22BaA6AljM7fNDTp.png"
+                        src="/images/design-mode/image.png"
                         alt="Fundadoras de Flora"
                         className="w-full max-w-md mx-auto rounded-lg shadow-lg mb-4"
                       />

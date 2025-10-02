@@ -17,6 +17,7 @@ export function Header() {
   const [searchQuery, setSearchQuery] = useState("")
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [currentSuggestionIndex, setCurrentSuggestionIndex] = useState(0)
+  const [isMobileSearchExpanded, setIsMobileSearchExpanded] = useState(false)
   const searchRef = useRef<HTMLDivElement>(null)
   const plantsDropdownRef = useRef<HTMLDivElement>(null)
   const macetasDropdownRef = useRef<HTMLDivElement>(null)
@@ -38,6 +39,7 @@ export function Header() {
     const handleClickOutside = (event: MouseEvent) => {
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
         setShowSuggestions(false)
+        setIsMobileSearchExpanded(false)
       }
       if (plantsDropdownRef.current && !plantsDropdownRef.current.contains(event.target as Node)) {
         setIsPlantsDropdownOpen(false)
@@ -56,6 +58,7 @@ export function Header() {
     if (searchQuery.trim()) {
       router.push(`/tienda?search=${encodeURIComponent(searchQuery.trim())}`)
       setShowSuggestions(false)
+      setIsMobileSearchExpanded(false)
     }
   }
 
@@ -63,11 +66,19 @@ export function Header() {
     setSearchQuery(suggestion)
     router.push(`/tienda?search=${encodeURIComponent(suggestion)}`)
     setShowSuggestions(false)
+    setIsMobileSearchExpanded(false)
   }
 
   const handleSearchFocus = () => {
     setShowSuggestions(true)
     setCurrentSuggestionIndex((prev) => (prev + 1) % allSuggestions.length)
+  }
+
+  const handleMobileSearchClick = () => {
+    setIsMobileSearchExpanded(!isMobileSearchExpanded)
+    if (!isMobileSearchExpanded) {
+      handleSearchFocus()
+    }
   }
 
   const handleNavigation = (href: string) => {
@@ -83,21 +94,45 @@ export function Header() {
         {/* Top section with search, logo, and icons */}
         <div className="flex h-32 items-center justify-between">
           {/* Search bar - left side */}
-          <div className="flex-1 max-w-xs">
+          <div className="flex-1 max-w-[200px] mr-4">
             <div ref={searchRef} className="relative">
-              <form onSubmit={handleSearch} className="relative">
-                <input
-                  type="text"
-                  placeholder="Buscar producto..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onFocus={handleSearchFocus}
-                  className="bg-transparent border-0 border-b border-gray-300 focus:border-primary focus:outline-none pb-2 pr-10 text-gray-700 placeholder-gray-400 transition-colors text-sm tracking-wide w-full"
-                />
-                <Search className="absolute right-0 bottom-2 h-4 w-4 text-gray-400" />
-              </form>
+              {!isMobileSearchExpanded ? (
+                <Button variant="ghost" size="sm" className="md:hidden" onClick={handleMobileSearchClick}>
+                  <Search className="h-5 w-5 text-gray-600" />
+                </Button>
+              ) : (
+                <div className="md:hidden">
+                  <form onSubmit={handleSearch} className="relative">
+                    <input
+                      type="text"
+                      placeholder="Buscar..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      onFocus={handleSearchFocus}
+                      autoFocus
+                      className="bg-transparent border-0 border-b border-gray-300 focus:border-primary focus:outline-none pb-2 pr-10 text-gray-700 placeholder-gray-400 transition-colors text-sm tracking-wide w-full"
+                    />
+                    <Search className="absolute right-0 bottom-2 h-4 w-4 text-gray-400" />
+                  </form>
+                </div>
+              )}
 
-              {showSuggestions && (
+              {/* Desktop search input */}
+              <div className="relative hidden md:block">
+                <form onSubmit={handleSearch} className="relative">
+                  <input
+                    type="text"
+                    placeholder="Buscar producto..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onFocus={handleSearchFocus}
+                    className="bg-transparent border-0 border-b border-gray-300 focus:border-primary focus:outline-none pb-2 pr-10 text-gray-700 placeholder-gray-400 transition-colors text-sm tracking-wide w-full"
+                  />
+                  <Search className="absolute right-0 bottom-2 h-4 w-4 text-gray-400" />
+                </form>
+              </div>
+
+              {showSuggestions && (isMobileSearchExpanded || window.innerWidth >= 768) && (
                 <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-md shadow-lg z-50 mt-1">
                   <div className="py-2">
                     <div className="px-3 py-1 text-xs font-medium text-gray-500 uppercase tracking-wide">
@@ -129,17 +164,17 @@ export function Header() {
                 height={160}
                 quality={100}
                 priority
-                className="h-28 w-auto object-contain"
+                className="h-28 object-contain w-auto my-0"
                 style={{ imageRendering: "crisp-edges" }}
               />
             </Link>
           </div>
 
           {/* User actions - right side */}
-          <div className="flex-1 flex justify-end items-center space-x-4">
+          <div className="flex-1 flex justify-end items-center space-x-4 mx-32">
             <Link href="/carrito">
               <Button variant="ghost" size="sm" className="relative">
-                <ShoppingCart className="h-6 w-6" />
+                <ShoppingCart className="h-6 w-6 px-0 my-0 mx-0" />
                 {itemCount > 0 && (
                   <Badge className="absolute -top-2 -right-2 h-6 w-6 rounded-full p-0 flex items-center justify-center text-xs">
                     {itemCount}
