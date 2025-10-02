@@ -14,10 +14,12 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isPlantsDropdownOpen, setIsPlantsDropdownOpen] = useState(false)
   const [isMacetasDropdownOpen, setIsMacetasDropdownOpen] = useState(false)
+  const [isMobilePlantsOpen, setIsMobilePlantsOpen] = useState(false)
+  const [isMobileMacetasOpen, setIsMobileMacetasOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [currentSuggestionIndex, setCurrentSuggestionIndex] = useState(0)
-  const [isMobileSearchExpanded, setIsMobileSearchExpanded] = useState(false)
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false)
   const searchRef = useRef<HTMLDivElement>(null)
   const plantsDropdownRef = useRef<HTMLDivElement>(null)
   const macetasDropdownRef = useRef<HTMLDivElement>(null)
@@ -27,10 +29,26 @@ export function Header() {
   const itemCount = state.items.reduce((sum, item) => sum + item.quantity, 0)
 
   const allSuggestions = [
-    ["Monstera", "Maceta Cerámica", "Chips Decorativos"],
-    ["Ficus", "Maceta Terracota", "Sustrato Universal"],
-    ["Pothos", "Macetas", "Tierra para Cactus"],
-    ["Plantas de interior", "Cerámica", "Chips"],
+    [
+      { name: "Monstera Deliciosa", id: "1" },
+      { name: "Maceta Cerámica Blanca", id: "3" },
+      { name: "Chips Decorativos", id: "5" },
+    ],
+    [
+      { name: "Ficus Lyrata", id: "2" },
+      { name: "Maceta Terracota", id: "7" },
+      { name: "Sustrato Universal", id: "4" },
+    ],
+    [
+      { name: "Pothos Dorado", id: "6" },
+      { name: "Sansiveria", id: "19" },
+      { name: "Tierra para Cactus", id: "8" },
+    ],
+    [
+      { name: "Spatiphyllum", id: "18" },
+      { name: "Maceta Cemento Redonda", id: "39" },
+      { name: "Compost Orgánico", id: "9" },
+    ],
   ]
 
   const currentSuggestions = allSuggestions[currentSuggestionIndex]
@@ -39,7 +57,6 @@ export function Header() {
     const handleClickOutside = (event: MouseEvent) => {
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
         setShowSuggestions(false)
-        setIsMobileSearchExpanded(false)
       }
       if (plantsDropdownRef.current && !plantsDropdownRef.current.contains(event.target as Node)) {
         setIsPlantsDropdownOpen(false)
@@ -58,15 +75,15 @@ export function Header() {
     if (searchQuery.trim()) {
       router.push(`/tienda?search=${encodeURIComponent(searchQuery.trim())}`)
       setShowSuggestions(false)
-      setIsMobileSearchExpanded(false)
+      setIsMobileSearchOpen(false)
     }
   }
 
-  const handleSuggestionClick = (suggestion: string) => {
-    setSearchQuery(suggestion)
-    router.push(`/tienda?search=${encodeURIComponent(suggestion)}`)
+  const handleSuggestionClick = (productId: string) => {
+    router.push(`/producto/${productId}`)
     setShowSuggestions(false)
-    setIsMobileSearchExpanded(false)
+    setIsMobileSearchOpen(false)
+    setSearchQuery("")
   }
 
   const handleSearchFocus = () => {
@@ -75,17 +92,17 @@ export function Header() {
   }
 
   const handleMobileSearchClick = () => {
-    setIsMobileSearchExpanded(!isMobileSearchExpanded)
-    if (!isMobileSearchExpanded) {
-      handleSearchFocus()
-    }
+    setIsMobileSearchOpen(true)
+    setShowSuggestions(true)
+    setCurrentSuggestionIndex((prev) => (prev + 1) % allSuggestions.length)
   }
 
-  const handleNavigation = (href: string) => {
-    router.push(href)
+  const closeMenu = () => {
     setIsMenuOpen(false)
     setIsPlantsDropdownOpen(false)
     setIsMacetasDropdownOpen(false)
+    setIsMobilePlantsOpen(false)
+    setIsMobileMacetasOpen(false)
   }
 
   return (
@@ -95,57 +112,37 @@ export function Header() {
         <div className="flex h-32 items-center justify-between">
           {/* Search bar - left side */}
           <div className="flex-1 max-w-[200px] mr-4">
-            <div ref={searchRef} className="relative">
-              {!isMobileSearchExpanded ? (
-                <Button variant="ghost" size="sm" className="md:hidden" onClick={handleMobileSearchClick}>
-                  <Search className="h-5 w-5 text-gray-600" />
-                </Button>
-              ) : (
-                <div className="md:hidden">
-                  <form onSubmit={handleSearch} className="relative">
-                    <input
-                      type="text"
-                      placeholder="Buscar..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      onFocus={handleSearchFocus}
-                      autoFocus
-                      className="bg-transparent border-0 border-b border-gray-300 focus:border-primary focus:outline-none pb-2 pr-10 text-gray-700 placeholder-gray-400 transition-colors text-sm tracking-wide w-full"
-                    />
-                    <Search className="absolute right-0 bottom-2 h-4 w-4 text-gray-400" />
-                  </form>
-                </div>
-              )}
+            <Button variant="ghost" size="sm" className="md:hidden" onClick={handleMobileSearchClick}>
+              <Search className="h-5 w-5 text-gray-600" />
+            </Button>
 
-              {/* Desktop search input */}
-              <div className="relative hidden md:block">
-                <form onSubmit={handleSearch} className="relative">
-                  <input
-                    type="text"
-                    placeholder="Buscar producto..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    onFocus={handleSearchFocus}
-                    className="bg-transparent border-0 border-b border-gray-300 focus:border-primary focus:outline-none pb-2 pr-10 text-gray-700 placeholder-gray-400 transition-colors text-sm tracking-wide w-full"
-                  />
-                  <Search className="absolute right-0 bottom-2 h-4 w-4 text-gray-400" />
-                </form>
-              </div>
+            <div ref={searchRef} className="relative hidden md:block">
+              <form onSubmit={handleSearch} className="relative">
+                <input
+                  type="text"
+                  placeholder="Buscar producto..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onFocus={handleSearchFocus}
+                  className="bg-transparent border-0 border-b border-gray-300 focus:border-primary focus:outline-none pb-2 pr-10 text-gray-700 placeholder-gray-400 transition-colors text-sm tracking-wide w-full"
+                />
+                <Search className="absolute right-0 bottom-2 h-4 w-4 text-gray-400" />
+              </form>
 
-              {showSuggestions && (isMobileSearchExpanded || window.innerWidth >= 768) && (
+              {showSuggestions && (
                 <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-md shadow-lg z-50 mt-1">
                   <div className="py-2">
                     <div className="px-3 py-1 text-xs font-medium text-gray-500 uppercase tracking-wide">
-                      Sugerencias populares
+                      Productos populares
                     </div>
                     {currentSuggestions.map((suggestion, index) => (
                       <button
                         key={index}
-                        onClick={() => handleSuggestionClick(suggestion)}
+                        onClick={() => handleSuggestionClick(suggestion.id)}
                         className="w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors flex items-center space-x-2"
                       >
                         <Search className="h-3 w-3 text-gray-400" />
-                        <span>{suggestion}</span>
+                        <span>{suggestion.name}</span>
                       </button>
                     ))}
                   </div>
@@ -156,7 +153,7 @@ export function Header() {
 
           {/* Logo - center */}
           <div className="absolute left-1/2 transform -translate-x-1/2">
-            <Link href="/" className="flex items-center">
+            <Link href="/" className="flex items-center group">
               <Image
                 src="/flora-logo-new.png"
                 alt="Flora Green Garden Paisajismo"
@@ -164,14 +161,14 @@ export function Header() {
                 height={160}
                 quality={100}
                 priority
-                className="h-28 object-contain w-auto my-0"
+                className="h-28 object-contain w-auto my-0 transition-all duration-300 ease-in-out group-hover:scale-105 group-hover:brightness-110"
                 style={{ imageRendering: "crisp-edges" }}
               />
             </Link>
           </div>
 
           {/* User actions - right side */}
-          <div className="flex-1 flex justify-end items-center space-x-4 mx-32">
+          <div className="flex-1 flex justify-end items-center space-x-4 mx-0">
             <Link href="/carrito">
               <Button variant="ghost" size="sm" className="relative">
                 <ShoppingCart className="h-6 w-6 px-0 my-0 mx-0" />
@@ -190,127 +187,186 @@ export function Header() {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {isMobileSearchOpen && (
+          <div className="fixed inset-0 bg-white z-50 md:hidden">
+            <div className="container mx-auto px-4 py-4">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-semibold text-gray-800">Buscar productos</h2>
+                <Button variant="ghost" size="sm" onClick={() => setIsMobileSearchOpen(false)}>
+                  <X className="h-5 w-5" />
+                </Button>
+              </div>
+
+              <form onSubmit={handleSearch} className="relative mb-4">
+                <input
+                  type="text"
+                  placeholder="Buscar..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  autoFocus
+                  className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 pr-12 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                />
+                <button type="submit" className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                  <Search className="h-5 w-5 text-gray-400" />
+                </button>
+              </form>
+
+              {showSuggestions && (
+                <div className="bg-white">
+                  <div className="mb-2">
+                    <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">
+                      Productos populares
+                    </div>
+                    <div className="space-y-2">
+                      {currentSuggestions.map((suggestion, index) => (
+                        <button
+                          key={index}
+                          onClick={() => handleSuggestionClick(suggestion.id)}
+                          className="w-full text-left px-4 py-3 text-sm text-gray-700 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors flex items-center space-x-3"
+                        >
+                          <Search className="h-4 w-4 text-gray-400" />
+                          <span>{suggestion.name}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t">
-            <nav className="flex flex-col space-y-4">
-              <button
-                onClick={() => handleNavigation("/")}
-                className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium text-left relative group hover:scale-105 hover:translate-x-2"
+            <nav className="flex flex-col space-y-2">
+              <Link
+                href="/"
+                onClick={closeMenu}
+                className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium text-left relative group hover:scale-105 hover:translate-x-2 py-2"
               >
                 <span className="relative">
                   INICIO
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
                 </span>
-              </button>
-              <div className="space-y-2">
+              </Link>
+
+              {/* Mobile Plants Dropdown */}
+              <div>
                 <button
-                  onClick={() => setIsPlantsDropdownOpen(!isPlantsDropdownOpen)}
-                  className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium text-left relative group hover:scale-105 hover:translate-x-2 flex items-center"
+                  onClick={() => setIsMobilePlantsOpen(!isMobilePlantsOpen)}
+                  className="w-full text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium text-left relative group hover:scale-105 hover:translate-x-2 py-2 flex items-center justify-between"
                 >
                   <span className="relative">
                     PLANTAS
                     <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
                   </span>
-                  <ChevronDown
-                    className={`ml-1 h-3 w-3 transition-transform ${isPlantsDropdownOpen ? "rotate-180" : ""}`}
-                  />
+                  <ChevronDown className={`h-4 w-4 transition-transform ${isMobilePlantsOpen ? "rotate-180" : ""}`} />
                 </button>
-                {isPlantsDropdownOpen && (
-                  <div className="ml-4 space-y-2">
-                    <button
-                      onClick={() => handleNavigation("/tienda?categoria=plantas-interior")}
-                      className="text-gray-600 hover:text-[rgb(85,107,47)] transition-all duration-300 text-sm text-left block"
+                {isMobilePlantsOpen && (
+                  <div className="pl-4 mt-2 space-y-2">
+                    <Link
+                      href="/tienda?categoria=plantas-interior"
+                      onClick={closeMenu}
+                      className="block text-gray-600 hover:text-[rgb(85,107,47)] transition-colors py-2 text-sm"
                     >
                       Plantas de interior
-                    </button>
-                    <button
-                      onClick={() => handleNavigation("/tienda?categoria=plantas-exterior")}
-                      className="text-gray-600 hover:text-[rgb(85,107,47)] transition-all duration-300 text-sm text-left block"
+                    </Link>
+                    <Link
+                      href="/tienda?categoria=plantas-exterior"
+                      onClick={closeMenu}
+                      className="block text-gray-600 hover:text-[rgb(85,107,47)] transition-colors py-2 text-sm"
                     >
                       Plantas de exterior
-                    </button>
+                    </Link>
                   </div>
                 )}
               </div>
-              <div className="space-y-2">
+
+              {/* Mobile Macetas Dropdown */}
+              <div>
                 <button
-                  onClick={() => setIsMacetasDropdownOpen(!isMacetasDropdownOpen)}
-                  className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium text-left relative group hover:scale-105 hover:translate-x-2 flex items-center"
+                  onClick={() => setIsMobileMacetasOpen(!isMobileMacetasOpen)}
+                  className="w-full text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium text-left relative group hover:scale-105 hover:translate-x-2 py-2 flex items-center justify-between"
                 >
                   <span className="relative">
                     MACETAS
                     <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
                   </span>
-                  <ChevronDown
-                    className={`ml-1 h-3 w-3 transition-transform ${isMacetasDropdownOpen ? "rotate-180" : ""}`}
-                  />
+                  <ChevronDown className={`h-4 w-4 transition-transform ${isMobileMacetasOpen ? "rotate-180" : ""}`} />
                 </button>
-                {isMacetasDropdownOpen && (
-                  <div className="ml-4 space-y-2">
-                    <button
-                      onClick={() => handleNavigation("/contacto")}
-                      className="text-gray-600 hover:text-[rgb(85,107,47)] transition-all duration-300 text-sm text-left block"
+                {isMobileMacetasOpen && (
+                  <div className="pl-4 mt-2 space-y-2">
+                    <Link
+                      href="/tienda?categoria=macetas-livianas"
+                      onClick={closeMenu}
+                      className="block text-gray-600 hover:text-[rgb(85,107,47)] transition-colors py-2 text-sm"
                     >
-                      Macetas ultralivianas
-                    </button>
-                    <button
-                      onClick={() => handleNavigation("/contacto")}
-                      className="text-gray-600 hover:text-[rgb(85,107,47)] transition-all duration-300 text-sm text-left block"
+                      Macetas livianas
+                    </Link>
+                    <Link
+                      href="/tienda?categoria=macetas-cemento"
+                      onClick={closeMenu}
+                      className="block text-gray-600 hover:text-[rgb(85,107,47)] transition-colors py-2 text-sm"
                     >
-                      Macetas de cemento (consultar)
-                    </button>
-                    <button
-                      onClick={() => handleNavigation("/tienda?categoria=macetas")}
-                      className="text-gray-600 hover:text-[rgb(85,107,47)] transition-all duration-300 text-sm text-left block"
+                      Macetas de cemento
+                    </Link>
+                    <Link
+                      href="/tienda?categoria=plantas-con-macetas"
+                      onClick={closeMenu}
+                      className="block text-gray-600 hover:text-[rgb(85,107,47)] transition-colors py-2 text-sm"
                     >
                       Plantas con macetas
-                    </button>
+                    </Link>
                   </div>
                 )}
               </div>
-              <button
-                onClick={() => handleNavigation("/tienda?categoria=tierras")}
-                className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium text-left relative group hover:scale-105 hover:translate-x-2"
+
+              <Link
+                href="/tienda?categoria=tierras"
+                onClick={closeMenu}
+                className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium text-left relative group hover:scale-105 hover:translate-x-2 py-2"
               >
                 <span className="relative">
                   SUSTRATOS
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
                 </span>
-              </button>
-              <button
-                onClick={() => handleNavigation("/servicios")}
-                className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium text-left relative group hover:scale-105 hover:translate-x-2"
+              </Link>
+
+              <Link
+                href="/servicios"
+                onClick={closeMenu}
+                className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium text-left relative group hover:scale-105 hover:translate-x-2 py-2"
               >
                 <span className="relative">
                   SERVICIOS
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
                 </span>
-              </button>
-              <button
-                onClick={() => handleNavigation("/contacto")}
-                className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium text-left relative group hover:scale-105 hover:translate-x-2"
+              </Link>
+
+              <Link
+                href="/contacto"
+                onClick={closeMenu}
+                className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium text-left relative group hover:scale-105 hover:translate-x-2 py-2"
               >
                 <span className="relative">
                   CONTACTO
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
                 </span>
-              </button>
+              </Link>
             </nav>
           </div>
         )}
 
-        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center justify-center space-x-12 py-4 border-t border-gray-100">
-          <button
-            onClick={() => handleNavigation("/")}
+          <Link
+            href="/"
             className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium relative group hover:scale-110"
           >
             <span className="relative">
               INICIO
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
             </span>
-          </button>
+          </Link>
           <div ref={plantsDropdownRef} className="relative">
             <button
               onClick={() => setIsPlantsDropdownOpen(!isPlantsDropdownOpen)}
@@ -327,18 +383,20 @@ export function Header() {
             {isPlantsDropdownOpen && (
               <div className="absolute top-full left-0 mt-2 bg-white border border-gray-200 rounded-md shadow-lg z-50 min-w-48">
                 <div className="py-2">
-                  <button
-                    onClick={() => handleNavigation("/tienda?categoria=plantas-interior")}
-                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[rgb(85,107,47)] transition-colors"
+                  <Link
+                    href="/tienda?categoria=plantas-interior"
+                    onClick={() => setIsPlantsDropdownOpen(false)}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[rgb(85,107,47)] transition-colors"
                   >
                     Plantas de interior
-                  </button>
-                  <button
-                    onClick={() => handleNavigation("/tienda?categoria=plantas-exterior")}
-                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[rgb(85,107,47)] transition-colors"
+                  </Link>
+                  <Link
+                    href="/tienda?categoria=plantas-exterior"
+                    onClick={() => setIsPlantsDropdownOpen(false)}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[rgb(85,107,47)] transition-colors"
                   >
                     Plantas de exterior
-                  </button>
+                  </Link>
                 </div>
               </div>
             )}
@@ -359,55 +417,58 @@ export function Header() {
             {isMacetasDropdownOpen && (
               <div className="absolute top-full left-0 mt-2 bg-white border border-gray-200 rounded-md shadow-lg z-50 min-w-64">
                 <div className="py-2">
-                  <button
-                    onClick={() => handleNavigation("/contacto")}
-                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[rgb(85,107,47)] transition-colors"
+                  <Link
+                    href="/tienda?categoria=macetas-livianas"
+                    onClick={() => setIsMacetasDropdownOpen(false)}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[rgb(85,107,47)] transition-colors"
                   >
-                    Macetas ultralivianas
-                  </button>
-                  <button
-                    onClick={() => handleNavigation("/contacto")}
-                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[rgb(85,107,47)] transition-colors"
+                    Macetas livianas
+                  </Link>
+                  <Link
+                    href="/tienda?categoria=macetas-cemento"
+                    onClick={() => setIsMacetasDropdownOpen(false)}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[rgb(85,107,47)] transition-colors"
                   >
-                    Macetas de cemento (consultar)
-                  </button>
-                  <button
-                    onClick={() => handleNavigation("/tienda?categoria=macetas")}
-                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[rgb(85,107,47)] transition-colors"
+                    Macetas de cemento
+                  </Link>
+                  <Link
+                    href="/tienda?categoria=plantas-con-macetas"
+                    onClick={() => setIsMacetasDropdownOpen(false)}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[rgb(85,107,47)] transition-colors"
                   >
                     Plantas con macetas
-                  </button>
+                  </Link>
                 </div>
               </div>
             )}
           </div>
-          <button
-            onClick={() => handleNavigation("/tienda?categoria=tierras")}
+          <Link
+            href="/tienda?categoria=tierras"
             className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium relative group hover:scale-110"
           >
             <span className="relative">
               SUSTRATOS
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
             </span>
-          </button>
-          <button
-            onClick={() => handleNavigation("/servicios")}
+          </Link>
+          <Link
+            href="/servicios"
             className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium relative group hover:scale-110"
           >
             <span className="relative">
               SERVICIOS
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
             </span>
-          </button>
-          <button
-            onClick={() => handleNavigation("/contacto")}
+          </Link>
+          <Link
+            href="/contacto"
             className="text-gray-700 hover:text-[rgb(85,107,47)] transition-all duration-300 font-medium relative group hover:scale-110"
           >
             <span className="relative">
               CONTACTO
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[rgb(85,107,47)] transition-all duration-300 group-hover:w-full"></span>
             </span>
-          </button>
+          </Link>
         </nav>
       </div>
     </header>

@@ -89,7 +89,7 @@ export function Footer() {
         </div>
 
         <div className="border-t mt-8 pt-8 text-center">
-          <p className="text-sm text-muted-foreground">© 2024 Flora. Todos los derechos reservados.</p>
+          <p className="text-sm text-muted-foreground">© 2025 Flora. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>

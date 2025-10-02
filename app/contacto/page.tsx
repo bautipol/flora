@@ -39,21 +39,21 @@ export default function ContactoPage() {
   }
 
   const generateWhatsAppMessage = () => {
-    let message = `🌿 *CONSULTA - FLORA* 🌿\n\n`
-    message += `👤 *Nombre:* ${form.nombre}\n`
-    message += `📧 *Email:* ${form.email}\n`
-    message += `📱 *Teléfono:* ${form.telefono}\n`
+    let message = `*CONSULTA - FLORA*\n\n`
+    message += `*Nombre:* ${form.nombre}\n`
+    message += `*Email:* ${form.email}\n`
+    message += `*Telefono:* ${form.telefono}\n`
 
     if (form.localidad) {
-      message += `📍 *Localidad:* ${form.localidad}\n`
+      message += `*Localidad:* ${form.localidad}\n`
     }
 
     if (form.servicio) {
-      message += `🛠️ *Servicio de interés:* ${form.servicio}\n`
+      message += `*Servicio de interes:* ${form.servicio}\n`
     }
 
-    message += `\n💬 *Mensaje:*\n${form.mensaje}\n\n`
-    message += `¡Gracias por contactarnos! 🌱`
+    message += `\n*Mensaje:*\n${form.mensaje}\n\n`
+    message += `Gracias por contactarnos!`
 
     return encodeURIComponent(message)
   }
@@ -97,7 +97,7 @@ export default function ContactoPage() {
 
   const openWhatsApp = () => {
     const whatsappNumber = "5491135617412"
-    const message = encodeURIComponent("¡Hola! Me interesa conocer más sobre los servicios de Flora 🌿")
+    const message = encodeURIComponent("Hola! Me interesa conocer mas sobre los servicios de Flora")
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`
 
     if (isMobile()) {

@@ -38,23 +38,23 @@ export default function CheckoutPage() {
   }
 
   const generateWhatsAppMessage = () => {
-    let message = `🌿 *NUEVO PEDIDO - FLORA* 🌿\n\n`
-    message += `👤 *Cliente:* ${form.nombre}\n`
-    message += `📧 *Email:* ${form.email}\n`
-    message += `📱 *Teléfono:* ${form.telefono}\n\n`
+    let message = `*NUEVO PEDIDO - FLORA*\n\n`
+    message += `*Cliente:* ${form.nombre}\n`
+    message += `*Email:* ${form.email}\n`
+    message += `*Telefono:* ${form.telefono}\n\n`
 
-    message += `🛒 *Productos:*\n`
+    message += `*Productos:*\n`
     state.items.forEach((item) => {
-      message += `• ${item.name} x${item.quantity} - $${(item.price * item.quantity).toLocaleString()}\n`
+      message += `- ${item.name} x${item.quantity} - $${(item.price * item.quantity).toLocaleString()}\n`
     })
 
-    message += `\n💰 *Total: $${state.total.toLocaleString()}*\n\n`
+    message += `\n*Total: $${state.total.toLocaleString()}*\n\n`
 
     if (form.notas) {
-      message += `📝 *Notas adicionales:*\n${form.notas}\n\n`
+      message += `*Notas adicionales:*\n${form.notas}\n\n`
     }
 
-    message += `¡Gracias por elegir Flora! 🌱\n`
+    message += `Gracias por elegir Flora!\n`
     message += `Nos pondremos en contacto para coordinar el pago y la entrega.`
 
     return encodeURIComponent(message)

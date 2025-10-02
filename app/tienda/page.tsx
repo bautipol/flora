@@ -1,8 +1,9 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef, useMemo } from "react"
 import { motion } from "framer-motion"
 import { useSearchParams, useRouter } from "next/navigation"
+import Image from "next/image"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
@@ -10,7 +11,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ShoppingCart, Search } from 'lucide-react'
+import { ShoppingCart, Search, MessageCircle } from "lucide-react"
 import { useCart, type Product } from "@/contexts/cart-context"
 
 interface ExtendedProduct extends Product {
@@ -20,6 +21,7 @@ interface ExtendedProduct extends Product {
     temperature: string
     tips: string
   }
+  consultPrice?: boolean // Added flag for products that need price consultation
 }
 
 const products: ExtendedProduct[] = [
@@ -66,7 +68,7 @@ const products: ExtendedProduct[] = [
     name: "Maceta Cerámica Blanca",
     price: 1800,
     image: "/white-ceramic-plant-pot.jpg",
-    category: "macetas",
+    category: "macetas-livianas",
     description: "Maceta de cerámica blanca con diseño minimalista",
     options: [
       { name: "Chica (12cm)", price: 1800 },
@@ -124,7 +126,7 @@ const products: ExtendedProduct[] = [
     name: "Maceta Terracota",
     price: 1200,
     image: "/terracotta-clay-plant-pot.jpg",
-    category: "macetas",
+    category: "macetas-livianas",
     description: "Maceta de terracota tradicional, ideal para plantas que necesitan drenaje",
     options: [
       { name: "Chica (10cm)", price: 1200 },
@@ -691,6 +693,182 @@ const products: ExtendedProduct[] = [
       tips: "Hojas aromáticas usadas en cocina. Podar para mantener forma deseada.",
     },
   },
+  {
+    id: "39",
+    name: "Maceta Cemento Redonda",
+    price: 0,
+    image: "/round-concrete-cement-pot-planter-gray-modern-mini.jpg",
+    category: "macetas-cemento",
+    description: "Maceta de cemento redonda con acabado liso, ideal para interiores y exteriores.",
+    consultPrice: true,
+  },
+  {
+    id: "40",
+    name: "Maceta Cemento Cuadrada",
+    price: 0,
+    image: "/square-concrete-cement-pot-planter-gray-modern-geo.jpg",
+    category: "macetas-cemento",
+    description: "Maceta de cemento cuadrada con diseño geométrico moderno.",
+    consultPrice: true,
+  },
+  {
+    id: "41",
+    name: "Maceta Cemento Cilíndrica",
+    price: 0,
+    image: "/cylindrical-concrete-cement-pot-planter-tall-gray-.jpg",
+    category: "macetas-cemento",
+    description: "Maceta de cemento cilíndrica alta, perfecta para plantas grandes.",
+    consultPrice: true,
+  },
+  {
+    id: "42",
+    name: "Maceta Cemento Texturizada",
+    price: 0,
+    image: "/textured-concrete-cement-pot-planter-rough-surface.jpg",
+    category: "macetas-cemento",
+    description: "Maceta de cemento con textura rugosa, estilo industrial moderno.",
+    consultPrice: true,
+  },
+  {
+    id: "43",
+    name: "Maceta Cemento Cónica",
+    price: 0,
+    image: "/conical-concrete-cement-pot-planter-tapered-gray-m.jpg",
+    category: "macetas-cemento",
+    description: "Maceta de cemento cónica con diseño elegante y contemporáneo.",
+    consultPrice: true,
+  },
+  {
+    id: "44",
+    name: "Maceta Cemento Bowl",
+    price: 0,
+    image: "/bowl-concrete-cement-pot-planter-wide-shallow-gray.jpg",
+    category: "macetas-cemento",
+    description: "Maceta de cemento tipo bowl, ideal para suculentas y cactus.",
+    consultPrice: true,
+  },
+  {
+    id: "45",
+    name: "Maceta Plástico Negro",
+    price: 800,
+    image: "/black-plastic-pot-planter-lightweight-modern.jpg",
+    category: "macetas-livianas",
+    description: "Maceta de plástico negro ligera, ideal para todo tipo de plantas.",
+    options: [
+      { name: "Chica (10cm)", price: 800 },
+      { name: "Mediana (15cm)", price: 1200 },
+      { name: "Grande (20cm)", price: 1800 },
+    ],
+  },
+  {
+    id: "46",
+    name: "Maceta Resina Blanca",
+    price: 1500,
+    image: "/white-resin-pot-planter-lightweight-modern-clean.jpg",
+    category: "macetas-livianas",
+    description: "Maceta de resina blanca con acabado mate, muy liviana y resistente.",
+    options: [
+      { name: "Chica (12cm)", price: 1500 },
+      { name: "Mediana (18cm)", price: 2200 },
+      { name: "Grande (25cm)", price: 3000 },
+    ],
+  },
+  {
+    id: "47",
+    name: "Maceta Plástico Colores",
+    price: 900,
+    image: "/colorful-plastic-pot-planter-bright-modern-fun.jpg",
+    category: "macetas-livianas",
+    description: "Maceta de plástico en colores vibrantes, perfecta para alegrar espacios.",
+    options: [
+      { name: "Chica (10cm)", price: 900 },
+      { name: "Mediana (15cm)", price: 1400 },
+      { name: "Grande (20cm)", price: 2000 },
+    ],
+  },
+  {
+    id: "48",
+    name: "Maceta Resina Gris",
+    price: 1600,
+    image: "/gray-resin-pot-planter-lightweight-modern-neutral.jpg",
+    category: "macetas-livianas",
+    description: "Maceta de resina gris con diseño minimalista y moderno.",
+    options: [
+      { name: "Chica (12cm)", price: 1600 },
+      { name: "Mediana (18cm)", price: 2400 },
+      { name: "Grande (25cm)", price: 3200 },
+    ],
+  },
+  {
+    id: "49",
+    name: "Pack Pothos + Maceta Cerámica",
+    price: 3800,
+    image: "/pothos-plant-in-white-ceramic-pot-combo-pack.jpg",
+    category: "plantas-con-macetas",
+    description: "Pothos dorado en maceta de cerámica blanca, listo para decorar.",
+    options: [
+      { name: "Pack Pequeño", price: 3800 },
+      { name: "Pack Mediano", price: 5200 },
+      { name: "Pack Grande", price: 6800 },
+    ],
+  },
+  {
+    id: "50",
+    name: "Pack Sansiveria + Maceta Cemento",
+    price: 4500,
+    image: "/sansevieria-snake-plant-in-concrete-pot-combo-pack.jpg",
+    category: "plantas-con-macetas",
+    description: "Sansiveria en maceta de cemento, combinación perfecta de estilo y resistencia.",
+    consultPrice: true,
+  },
+  {
+    id: "51",
+    name: "Pack Monstera + Maceta Terracota",
+    price: 4800,
+    image: "/monstera-deliciosa-in-terracotta-pot-combo-pack.jpg",
+    category: "plantas-con-macetas",
+    description: "Monstera deliciosa en maceta de terracota, estilo clásico y elegante.",
+    options: [
+      { name: "Pack Pequeño", price: 4800 },
+      { name: "Pack Mediano", price: 6500 },
+      { name: "Pack Grande", price: 8500 },
+    ],
+  },
+  {
+    id: "52",
+    name: "Pack Spatiphyllum + Maceta Blanca",
+    price: 4200,
+    image: "/peace-lily-spathiphyllum-in-white-pot-combo-pack.jpg",
+    category: "plantas-con-macetas",
+    description: "Spatiphyllum en maceta blanca, purifica el aire con estilo.",
+    options: [
+      { name: "Pack Pequeño", price: 4200 },
+      { name: "Pack Mediano", price: 5800 },
+      { name: "Pack Grande", price: 7500 },
+    ],
+  },
+  {
+    id: "53",
+    name: "Pack Suculentas + Maceta Cemento",
+    price: 2800,
+    image: "/succulent-plants-in-concrete-bowl-pot-combo-pack.jpg",
+    category: "plantas-con-macetas",
+    description: "Variedad de suculentas en maceta de cemento tipo bowl.",
+    consultPrice: true,
+  },
+  {
+    id: "54",
+    name: "Pack Ficus + Maceta Resina",
+    price: 5500,
+    image: "/placeholder.svg?height=300&width=300",
+    category: "plantas-con-macetas",
+    description: "Ficus lyrata en maceta de resina moderna, elegancia garantizada.",
+    options: [
+      { name: "Pack Pequeño", price: 5500 },
+      { name: "Pack Mediano", price: 7800 },
+      { name: "Pack Grande", price: 10200 },
+    ],
+  },
 ]
 
 const categories = [
@@ -699,6 +877,9 @@ const categories = [
   { value: "plantas-interior", label: "Plantas de Interior" },
   { value: "plantas-exterior", label: "Plantas de Exterior" },
   { value: "macetas", label: "Macetas" },
+  { value: "macetas-cemento", label: "Macetas de Cemento" },
+  { value: "macetas-livianas", label: "Macetas Livianas" },
+  { value: "plantas-con-macetas", label: "Plantas con Macetas" },
   { value: "tierras", label: "Tierras y Sustratos" },
   { value: "chips", label: "Chips Decorativos" },
 ]
@@ -710,6 +891,7 @@ export default function TiendaPage() {
   const [selectedCategory, setSelectedCategory] = useState("todos")
   const [sortBy, setSortBy] = useState("name")
   const { addToCart } = useCart()
+  const productsGridRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const searchParam = searchParams.get("search")
@@ -717,59 +899,81 @@ export default function TiendaPage() {
 
     if (categoryParam && categoryParam !== "todos") {
       setSelectedCategory(categoryParam)
-      setSearchTerm("") // Clear search when selecting category
+      setSearchTerm("")
     } else if (searchParam) {
       setSearchTerm(searchParam)
-      setSelectedCategory("todos") // Reset category when searching
+      setSelectedCategory("todos")
     }
   }, [searchParams])
 
-  const filteredProducts = products
-    .filter((product) => {
-      const searchLower = searchTerm.toLowerCase()
+  const handleCategoryChange = (value: string) => {
+    setSelectedCategory(value)
 
-      // Helper function to handle plurals
-      const normalizeSearchTerm = (term: string) => {
-        const singular = term.endsWith("s") ? term.slice(0, -1) : term
-        const plural = term.endsWith("s") ? term : term + "s"
-        return [term, singular, plural]
-      }
+    if (value !== "todos") {
+      router.push(`/tienda?categoria=${value}`, { scroll: false })
+    } else {
+      router.push("/tienda", { scroll: false })
+    }
 
-      const searchVariations = normalizeSearchTerm(searchLower)
+    setTimeout(() => {
+      productsGridRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+    }, 100)
+  }
 
-      const matchesSearch =
-        searchTerm === "" ||
-        searchVariations.some(
-          (variation) =>
-            product.name.toLowerCase().includes(variation) || product.description.toLowerCase().includes(variation),
-        )
+  const handleConsultPrice = (productName: string) => {
+    const message = `Hola! Me interesa consultar el precio de: ${productName}. Podrian darme mas informacion?`
+    const whatsappUrl = `https://wa.me/5491135617412?text=${encodeURIComponent(message)}`
+    window.open(whatsappUrl, "_blank")
+  }
 
-      let matchesCategory = false
-      if (selectedCategory === "todos") {
-        matchesCategory = true
-      } else if (selectedCategory === "plantas") {
-        // Show only plants and chips in the "plantas" category
-        matchesCategory =
-          product.category === "plantas-interior" ||
-          product.category === "chips" ||
-          product.category === "plantas-exterior"
-      } else {
-        matchesCategory = product.category === selectedCategory
-      }
+  const filteredProducts = useMemo(() => {
+    return products
+      .filter((product) => {
+        const searchLower = searchTerm.toLowerCase()
 
-      return matchesSearch && matchesCategory
-    })
-    .sort((a, b) => {
-      switch (sortBy) {
-        case "price-low":
-          return a.price - b.price
-        case "price-high":
-          return b.price - a.price
-        case "name":
-        default:
-          return a.name.localeCompare(b.name)
-      }
-    })
+        const normalizeSearchTerm = (term: string) => {
+          const singular = term.endsWith("s") ? term.slice(0, -1) : term
+          const plural = term.endsWith("s") ? term : term + "s"
+          return [term, singular, plural]
+        }
+
+        const searchVariations = normalizeSearchTerm(searchLower)
+
+        const matchesSearch =
+          searchTerm === "" ||
+          searchVariations.some(
+            (variation) =>
+              product.name.toLowerCase().includes(variation) || product.description.toLowerCase().includes(variation),
+          )
+
+        let matchesCategory = false
+        if (selectedCategory === "todos") {
+          matchesCategory = true
+        } else if (selectedCategory === "plantas") {
+          matchesCategory =
+            product.category === "plantas-interior" ||
+            product.category === "chips" ||
+            product.category === "plantas-exterior"
+        } else if (selectedCategory === "macetas") {
+          matchesCategory = product.category === "macetas-cemento" || product.category === "macetas-livianas"
+        } else {
+          matchesCategory = product.category === selectedCategory
+        }
+
+        return matchesSearch && matchesCategory
+      })
+      .sort((a, b) => {
+        switch (sortBy) {
+          case "price-low":
+            return a.price - b.price
+          case "price-high":
+            return b.price - a.price
+          case "name":
+          default:
+            return a.name.localeCompare(b.name)
+        }
+      })
+  }, [searchTerm, selectedCategory, sortBy])
 
   return (
     <div className="min-h-screen">
@@ -779,13 +983,13 @@ export default function TiendaPage() {
         className="container mx-auto px-4 py-8"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.4 }}
       >
         <motion.div
           className="mb-8"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
         >
           <h1 className="text-3xl md:text-4xl font-bold text-primary mb-4 font-sans">Nuestra Tienda</h1>
           <p className="text-lg text-muted-foreground">
@@ -798,7 +1002,7 @@ export default function TiendaPage() {
           className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
         >
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
@@ -810,7 +1014,7 @@ export default function TiendaPage() {
             />
           </div>
 
-          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+          <Select value={selectedCategory} onValueChange={handleCategoryChange}>
             <SelectTrigger>
               <SelectValue placeholder="Categoría" />
             </SelectTrigger>
@@ -836,35 +1040,46 @@ export default function TiendaPage() {
         </motion.div>
 
         {/* Products Grid */}
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-        >
-          {filteredProducts.map((product, index) => (
+        <div ref={productsGridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {filteredProducts.map((product) => (
             <motion.div
               key={product.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 * index }}
-              whileHover={{ y: -5, scale: 1.02 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
               className="group relative"
             >
-              <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-                <div
-                  className="h-48 bg-cover bg-center relative group-hover:scale-105 transition-transform duration-300"
-                  style={{ backgroundImage: `url('${product.image}')` }}
-                >
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      onClick={() => router.push(`/producto/${product.id}`)}
-                      className="bg-white text-black hover:bg-gray-100 shadow-lg"
-                    >
-                      Ver más
-                    </Button>
+              <Card className="overflow-hidden hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
+                <div className="relative h-48 w-full overflow-hidden bg-gray-100">
+                  <Image
+                    src={product.image || "/placeholder.svg"}
+                    alt={product.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    {product.consultPrice ? (
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        onClick={() => handleConsultPrice(product.name)}
+                        className="bg-white text-black hover:bg-gray-100 shadow-lg flex items-center gap-2"
+                      >
+                        <MessageCircle className="h-4 w-4" />
+                        Consultar precio
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        onClick={() => router.push(`/producto/${product.id}`)}
+                        className="bg-white text-black hover:bg-gray-100 shadow-lg"
+                      >
+                        Ver más
+                      </Button>
+                    )}
                   </div>
                 </div>
                 <CardContent className="p-4">
@@ -874,12 +1089,27 @@ export default function TiendaPage() {
                     </Badge>
                   </div>
                   <h3 className="font-semibold mb-2 text-balance">{product.name}</h3>
-                  <p className="text-sm text-muted-foreground mb-3 text-pretty">{product.description}</p>
+                  <p className="text-sm text-muted-foreground mb-3 text-pretty line-clamp-2">{product.description}</p>
                   <div className="flex items-center justify-between">
-                    <span className="text-lg font-bold text-primary">
-                      desde ${Math.min(...product.options!.map((option) => option.price)).toLocaleString()}
-                    </span>
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    {product.consultPrice ? (
+                      <span className="text-lg font-bold text-primary">Consultar</span>
+                    ) : product.options && product.options.length > 0 ? (
+                      <span className="text-lg font-bold text-primary">
+                        desde ${Math.min(...product.options.map((option) => option.price)).toLocaleString()}
+                      </span>
+                    ) : (
+                      <span className="text-lg font-bold text-primary">${product.price.toLocaleString()}</span>
+                    )}
+                    {product.consultPrice ? (
+                      <Button
+                        size="sm"
+                        onClick={() => handleConsultPrice(product.name)}
+                        className="flex items-center gap-2 bg-green-600 hover:bg-green-700"
+                      >
+                        <MessageCircle className="h-4 w-4" />
+                        Consultar
+                      </Button>
+                    ) : (
                       <Button
                         size="sm"
                         onClick={() => addToCart(product as Product)}
@@ -888,20 +1118,20 @@ export default function TiendaPage() {
                         <ShoppingCart className="h-4 w-4" />
                         Agregar
                       </Button>
-                    </motion.div>
+                    )}
                   </div>
                 </CardContent>
               </Card>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
 
         {filteredProducts.length === 0 && (
           <motion.div
             className="text-center py-12"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.4 }}
           >
             <p className="text-lg text-muted-foreground">No se encontraron productos que coincidan con tu búsqueda.</p>
           </motion.div>
